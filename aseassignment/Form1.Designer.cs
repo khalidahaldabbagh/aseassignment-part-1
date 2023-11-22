@@ -52,7 +52,7 @@
             pbOutput.Location = new Point(666, 64);
             pbOutput.Margin = new Padding(3, 4, 3, 4);
             pbOutput.Name = "pbOutput";
-            pbOutput.Size = new Size(610, 550);
+            pbOutput.Size = new Size(610, 581);
             pbOutput.TabIndex = 0;
             pbOutput.TabStop = false;
             // 
@@ -69,7 +69,7 @@
             // btnExit
             // 
             btnExit.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnExit.Location = new Point(1190, 661);
+            btnExit.Location = new Point(1190, 653);
             btnExit.Margin = new Padding(3, 4, 3, 4);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(86, 31);
@@ -80,7 +80,7 @@
             // rtbInput
             // 
             rtbInput.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            rtbInput.Location = new Point(14, 103);
+            rtbInput.Location = new Point(12, 103);
             rtbInput.Margin = new Padding(3, 4, 3, 4);
             rtbInput.Name = "rtbInput";
             rtbInput.Size = new Size(628, 398);
@@ -99,7 +99,7 @@
             // 
             // btnRun
             // 
-            btnRun.Location = new Point(557, 64);
+            btnRun.Location = new Point(556, 64);
             btnRun.Margin = new Padding(3, 4, 3, 4);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(86, 31);
@@ -159,7 +159,7 @@
             // btnSave
             // 
             btnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnSave.Location = new Point(557, 657);
+            btnSave.Location = new Point(556, 653);
             btnSave.Margin = new Padding(3, 4, 3, 4);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(86, 31);
@@ -170,7 +170,7 @@
             // btnLoad
             // 
             btnLoad.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnLoad.Location = new Point(464, 657);
+            btnLoad.Location = new Point(464, 653);
             btnLoad.Margin = new Padding(3, 4, 3, 4);
             btnLoad.Name = "btnLoad";
             btnLoad.Size = new Size(86, 31);
@@ -181,13 +181,14 @@
             // btnBrowse
             // 
             btnBrowse.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnBrowse.Location = new Point(371, 657);
+            btnBrowse.Location = new Point(372, 653);
             btnBrowse.Margin = new Padding(3, 4, 3, 4);
             btnBrowse.Name = "btnBrowse";
             btnBrowse.Size = new Size(86, 31);
             btnBrowse.TabIndex = 5;
             btnBrowse.Text = "Browse";
             btnBrowse.UseVisualStyleBackColor = true;
+            btnBrowse.Click += btnBrowse_Click;
             // 
             // Form1
             // 
