@@ -118,22 +118,22 @@ namespace aseassignment
                 foreach (String command in commands)
                 {
                     // For each command check if that string is not empty or is it a single argument command.
-                    if (!(command.Equals("") | command.Equals("clear") | command.Equals("reset") | command.Equals("run")))
+                    if (!(command.Equals("") || command.Equals("clear") || command.Equals("reset") || command.Equals("run")))
                     {
                         // Seperate the command arguments from the command.
                         String[] parts = command.Split(' ');
 
                         // Check if the arguments are of any valid lengths.
-                        if (parts.Length == 2 | parts.Length == 4 | parts.Length == 6)
+                        if (parts.Length == 2 || parts.Length == 4 || parts.Length == 6)
                         {
                             // Check if the first argument is valid.
-                            if (parts[0].Equals("moveto") | parts[0].Equals("drawto") | parts[0].Equals("circle") | parts[0].Equals("triangle") | parts[0].Equals("rectangle"))
+                            if (parts[0].Equals("moveto") || parts[0].Equals("drawto") || parts[0].Equals("circle") || parts[0].Equals("triangle") || parts[0].Equals("rectangle"))
                             {
                                 // Seperate the first argument parameters on the basis on comma.
                                 String[] parameters = parts[1].Split(',');
 
                                 // Check if the parameters are of valid length 1 or 2.
-                                if (parameters.Length == 1 | parameters.Length == 2) 
+                                if (parameters.Length == 1 || parameters.Length == 2) 
                                 {
                                     // Check if the parameters are of integer data type as they are cordinates.
                                     // We used try catch here as if the parameters are not of integer data type then it will throw an exception.
@@ -148,10 +148,10 @@ namespace aseassignment
                             if (parts.Length > 2)
                             {
                                 // Check if the argument is valid and moveto command is not given as moveto command does not have pen argument.
-                                if (parts[2].Equals("pen") & !parts[0].Equals("moveto"))
+                                if (parts[2].Equals("pen") && !parts[0].Equals("moveto"))
                                 {
                                     // Check if the pen argument parameter is valid.
-                                    if (parts[3].Equals("black") | parts[3].Equals("red") | parts[3].Equals("green")) 
+                                    if (parts[3].Equals("black") || parts[3].Equals("red") || parts[3].Equals("green")) 
                                     { }
                                     else { return false; }
                                 }
@@ -162,10 +162,10 @@ namespace aseassignment
                             if (parts.Length > 4)
                             {
                                 // Check if the argument is valid and moveto and drawto commands are not given as moveto and drawto commands do not have fill argument.
-                                if (parts[4].Equals("fill") & !parts[0].Equals("moveto") & !parts[0].Equals("drawto")) 
+                                if (parts[4].Equals("fill") && !parts[0].Equals("moveto") && !parts[0].Equals("drawto")) 
                                 {
                                     // Check if the fill argument parameter is valid.
-                                    if (parts[5].Equals("none") | parts[5].Equals("on"))
+                                    if (parts[5].Equals("none") || parts[5].Equals("on"))
                                     { }
                                     else { return false; }
                                 }
