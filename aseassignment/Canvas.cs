@@ -136,5 +136,29 @@ namespace aseassignment
                 }
             }
         }
+
+        /// <summary>
+        /// Method to move the cursor from the one location to another.
+        /// It changes the cursor location and Uses the helper functions to remove the cursor from the old location and draw it on the new location without affecting the canvas.
+        /// </summary>
+        /// <param name="toX">Destination X cordiante in the canvas</param>
+        /// <param name="toY">Destination Y cordiante in the canvas</param>
+        public void MoveTo(int toX, int toY)
+        {
+            // Remove the cursor from the old location. It also restore the canvas.
+            RemoveCursor();
+
+            // Change the location of the cursor to the given location
+            xPos = toX;
+            yPos = toY;
+
+            // At the new location, save the pixels of the location where the cursor is to be drawn.
+            SaveStateBeforeCursor();
+
+            // Draw the cursor on the new location.
+            DrawCursor();
+        }
+
+
     }
 }
