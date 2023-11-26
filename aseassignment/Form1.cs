@@ -289,7 +289,25 @@ namespace aseassignment
             }
         }
 
-
+        /// <summary>
+        /// Called when syntex check button is clicked. It will check the program whether is correct or not.
+        /// </summary>
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private void btnSyntax_Click(object sender, EventArgs e)
+        {
+            // Check the program whether is syntecally correct or not.
+            if (Parser.isValidSyntex(rtbInput.Text))
+            {
+                // Display the message if the program is syntecally correct.
+                MessageBox.Show("All the command are written correctly.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // Display the message if the program is not syntecally correct.
+                MessageBox.Show("There is an error in the given program.", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
 
     }
 }
