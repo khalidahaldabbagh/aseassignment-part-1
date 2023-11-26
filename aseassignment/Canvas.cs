@@ -159,6 +159,38 @@ namespace aseassignment
             DrawCursor();
         }
 
+        /// <summary>
+        /// Method to draw a line from the current cursor cordinates to the destination cordinates. It also changes the cursor location and
+        /// Uses the helper functions to remove the cursor from the old location and draw it on the new location without affecting the canvas.
+        /// </summary>
+        /// <param name="toX">Destination X cordiante in the canvas</param>
+        /// <param name="toY">Destination Y cordiante in the canvas</param>
+        /// <param name="penColor">The color of the line to be drawn</param>
+        public void DrawTo(int toX, int toY, String penColor = "black")
+        {
+            // Make a object of Pen class to draw the line. Make it of default color black.
+            Pen pen = new Pen(Color.Black, (float)1.3);
+
+            // If the color is given, change the color of the pen.
+            if (penColor.Equals("red")) { pen.Color = Color.Red; }
+            else if (penColor.Equals("green")) { pen.Color = Color.Green; }
+
+            // Remove the cursor from the old location. It also restore the canvas.
+            RemoveCursor();
+
+            // Draw the line from the current cursor cordinates to the destination cordinates on canvas.
+            g.DrawLine(pen, xPos, yPos, toX, toY);
+
+            // Change the location of the cursor to the given location
+            xPos = toX;
+            yPos = toY;
+
+            // At the new location, save the pixels of the location where the cursor is to be drawn.
+            SaveStateBeforeCursor();
+
+            // Draw the cursor on the new location.
+            DrawCursor();
+        }
 
     }
 }
