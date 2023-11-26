@@ -247,6 +247,18 @@ namespace aseassignment
             }
             return true;
         }
+        /// <summary>
+        /// Called when the exit button is pressed. It will exit the application.
+        /// </summary>
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            // Exit the application.
+            Application.Exit();
+        }
+
+
 
     }
 }
