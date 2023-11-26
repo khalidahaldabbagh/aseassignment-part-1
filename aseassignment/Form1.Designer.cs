@@ -233,5 +233,6 @@
         private Button btnSave;
         private Button btnLoad;
         private Button btnBrowse;
+        private OpenFileDialog openFileDialog;
     }
 }

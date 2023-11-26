@@ -28,6 +28,7 @@ namespace aseassignment
 
         // The width and height of the current form
         int formWidth, formHeight;
+       
 
         /// <summary>
         /// Constructor for the Form class. It will initialize all the GUI components set the default values to the attributes.
@@ -383,11 +384,7 @@ namespace aseassignment
                 executerun(commandsGiven);
             }
         }
-        /// <summary>
-        /// Called when the load button is clicked. It will load the data from the path given in tbFilePath into the program box.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e">The arguments passed on this event</param>
+
         private void btnLoad_Click(object sender, EventArgs e)
         {
             // Check if the file exists at the given path exists.
@@ -412,6 +409,116 @@ namespace aseassignment
             openFileDialog.Dispose();
         }
 
+        /// <summary>
+        /// Called when the save button is clicked. It will save the data to the path provided or selected through file dialog.
+        /// </summary>
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            // If there is no path in the tbFilePath text box.
+            if (tbFilePath.Text.Equals(""))
+            {
+                // Only text files are allowed.
+                openFileDialog.Filter = "(*.txt;)| *.txt;";
 
+                // Do not check if the file exists.
+                openFileDialog.CheckFileExists = false;
+
+                // Show the file dialog.
+                DialogResult result = openFileDialog.ShowDialog();
+
+                // If the user selects a file.
+                if (result == DialogResult.OK)
+                {
+                    try
+                    { // If the file on the path chosen exists.
+                        if (File.Exists(openFileDialog.FileName))
+                        { // Ask whether the user wants to overwrite the existing file.
+                            if (MessageBox.Show("Do want to overwrite the selected file.", "File already exits", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                            { // Using the stream writer (resource) write the text in that file.
+                                using (StreamWriter sw = File.CreateText(openFileDialog.FileName))
+                                {
+                                    // Write the text in the file.
+                                    sw.Write(rtbInput.Text);
+                                }
+                                // Display the success message.
+                                MessageBox.Show("The file has been save successfully.", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            }
+                        }
+                        else
+                        { // Using the stream writer (resource) write the text in that file.
+                            using (StreamWriter sw = File.CreateText(openFileDialog.FileName))
+                            {
+                                // Write the text in the file.
+                                sw.Write(rtbInput.Text);
+                            }
+                            // Display the success message.
+                            MessageBox.Show("The file has been save successfully.", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        }
+                    }
+                    catch (IOException)
+                    {
+                        // Display the error message if the file is in use.
+                        MessageBox.Show("There was an error saving the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                // Free the dialog box resources.
+                openFileDialog.Dispose();
+            }
+            else
+            { // If the tbFilePath has a path in text field.
+                try
+                { // If the file on the path entered exists.
+                    if (File.Exists(tbFilePath.Text))
+                    { // Ask whether the user wants to overwrite the existing file.
+                        if (MessageBox.Show("Do want to overwrite the selected file.", "File already exits", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        { // Using the stream writer (resource) write the text in that file.
+                            using (StreamWriter sw = File.CreateText(tbFilePath.Text))
+                            {
+                                // Write the text in the file.
+                                sw.Write(rtbInput.Text);
+                            }
+                            // Display the success message.
+                            MessageBox.Show("The file has been save successfully.", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        }
+                    }
+                    else
+                    { // using the stream writer (resource) write the text in that file.
+                        using (StreamWriter sw = File.CreateText(tbFilePath.Text))
+                        {
+                            // Write the text in the file.
+                            sw.Write(rtbInput.Text);
+                        }
+                        // Display the success message.
+                        MessageBox.Show("The file has been save successfully.", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                }
+                // Display the error message if an exception is thrown.
+                catch (Exception) { MessageBox.Show("There was an error saving the file. The path entered can be incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            }
+        }
+
+        /// <summary>
+        /// Called when browse button is clicked. It will open the file dialog to select the file on local system.
+        /// </summary>
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            // Only text files are allowed.
+            openFileDialog.Filter = "Text File(*.txt)|*.txt";
+
+            DialogResult result = openFileDialog.ShowDialog();
+
+            // If the user selects a file.
+            if (result == DialogResult.OK)
+            {
+                // Set the path in the tbFilePath.
+                tbFilePath.Text = openFileDialog.FileName;
+            }
+            // Free the dialog box resources.
+            openFileDialog.Dispose();
+        }
     }
 }
