@@ -383,7 +383,34 @@ namespace aseassignment
                 executerun(commandsGiven);
             }
         }
+        /// <summary>
+        /// Called when the load button is clicked. It will load the data from the path given in tbFilePath into the program box.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">The arguments passed on this event</param>
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            // Check if the file exists at the given path exists.
+            if (File.Exists(tbFilePath.Text))
+            {
+                // Read data from file and load the data in array of String.
+                string[] lines = File.ReadAllLines(openFileDialog.FileName);
 
+                // Join all the lines into one string and display it in the program richTextBox.
+                String text = String.Join(Environment.NewLine, lines);
+                rtbInput.Text = text;
+
+                // After loading the data, clear the file path text box.
+                tbFilePath.Text = "";
+            }
+            else
+            {
+                // Display the error message if the file does not exists.
+                MessageBox.Show("No file found at the given path.", "File Not Found", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            }
+            // Free the dialog box resources.
+            openFileDialog.Dispose();
+        }
 
 
     }
