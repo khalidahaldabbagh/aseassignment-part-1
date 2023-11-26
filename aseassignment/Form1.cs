@@ -268,6 +268,27 @@ namespace aseassignment
             // Run the program. It will run all the commands in the text box.
             executerun(rtbInput.Text);
         }
+        /// <summary>
+        /// Called when the "enter" key is pressed while typing in command line. It will run the command.
+        /// </summary>
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if the "enter" key is pressed.
+            if (e.KeyCode == Keys.Enter)
+            {
+                // If the command executes successfully then empty the commandline.
+                if (execute(textBox1.Text)) textBox1.Text = "";
+
+                // The event was handled. So, set the Handled property to true.
+                e.Handled = true;
+
+                // Do not send the key to the control.
+                e.SuppressKeyPress = true;
+            }
+        }
+
 
 
     }
