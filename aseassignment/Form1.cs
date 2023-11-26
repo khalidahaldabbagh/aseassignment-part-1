@@ -13,14 +13,17 @@ using System.IO;
 
 namespace aseassignment
 {
+
     /// <summary>
     /// Main Form class. It is the main display point for the application. It will display the canvas and the buttons.
-    /// It will also be used to take commands from the user and pass them to the canvas.
-    /// You can write a program, Save it or load it from other text files.
+    /// It will also be used to take commands from the user and pass them to the canvas. You can write a program,
+    /// Save it or load it from other text files.
     /// </summary>
     public partial class Form1 : Form
     {
-        /* The canvas object.Here we will use the canvas object to draw the shapes on a picturebox. */
+        /* The canvas object. It will be used to draw the shapes on the the object it's been passed.
+         * Here we will be using the canvas object to draw the shapes on a picturebox.
+         */
         Canvas Canvas;
 
         // It will contain all the commands that are used to make the current canvas (picturebox).
@@ -28,11 +31,10 @@ namespace aseassignment
 
         // The width and height of the current form
         int formWidth, formHeight;
-       
 
         /// <summary>
-        /// Constructor for the Form class. It will initialize all the GUI components set the default values to the attributes.
-        /// It will also set the canvas object to the picturebox and store the form dimensions in the attributes.
+        /// Constructor for the Form class. It will initialize all the GUI coponents set the default values to the attributes.
+        /// It will also set the canvas object to the picturebox. and store the form dimensions in the attributes.
         /// </summary>
         public Form1()
         {
@@ -84,7 +86,7 @@ namespace aseassignment
                     // Check if the command is "reset".
                     else if (command.Equals("reset"))
                     {
-                        // just move the pointer to the starting point of the canvas.
+                        // just move the pointer to the starting of the canvas.
                         Canvas.MoveTo(0, 0);
                     }
                     // Check if the command is "moveto".
@@ -212,7 +214,6 @@ namespace aseassignment
                         return false;
                     }
                 }
-
                 catch (Exception)
                 {
                     // Display the error message if a exception is thrown.
@@ -248,6 +249,7 @@ namespace aseassignment
             }
             return true;
         }
+
         /// <summary>
         /// Called when the exit button is pressed. It will exit the application.
         /// </summary>
@@ -269,6 +271,7 @@ namespace aseassignment
             // Run the program. It will run all the commands in the text box.
             executerun(rtbInput.Text);
         }
+
         /// <summary>
         /// Called when the "enter" key is pressed while typing in command line. It will run the command.
         /// </summary>
@@ -291,7 +294,7 @@ namespace aseassignment
         }
 
         /// <summary>
-        /// Called when syntex check button is clicked. It will check the program whether is correct or not.
+        /// Called when syntex check button is clicked. It will check the program whether is syntecally correct or not.
         /// </summary>
         /// <param name="sender">The object that is the sender of this event</param>
         /// <param name="e">The arguments passed on this event</param>
@@ -319,7 +322,7 @@ namespace aseassignment
         {
             try
             {
-                // Check if the input program is correct.
+                // Check if the input program is syntecally correct.
                 if (Parser.isValidSyntex(input))
                 {
                     // Split the input program into line commands.
@@ -337,7 +340,7 @@ namespace aseassignment
                 }
                 else
                 {
-                    // Display the error message if the program is not correct.
+                    // Display the error message if the program is not syntecally correct.
                     MessageBox.Show("Invalid program, please try again", "Syntex Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -385,6 +388,11 @@ namespace aseassignment
             }
         }
 
+        /// <summary>
+        /// Called when the load button is clicked. It will load the data from the path given in tbFilePath into the program box.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">The arguments passed on this event</param>
         private void btnLoad_Click(object sender, EventArgs e)
         {
             // Check if the file exists at the given path exists.
@@ -519,6 +527,11 @@ namespace aseassignment
             }
             // Free the dialog box resources.
             openFileDialog.Dispose();
+        }
+
+        private void rtbInput_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
