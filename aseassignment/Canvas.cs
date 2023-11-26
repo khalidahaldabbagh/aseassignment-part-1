@@ -192,5 +192,47 @@ namespace aseassignment
             DrawCursor();
         }
 
+        /// <summary>
+        /// Draw a circle of the given radius on the canvas with the cursor at the center.
+        /// The color of the circle is given by the penColor.
+        /// The circle can be filled if isFilled is "on".
+        /// </summary>
+        /// <param name="radius">Radius of the circle, the distance from boundry to the cursor</param>
+        /// <param name="penColor">The color of which the circle will be drawn, default is black</param>
+        /// <param name="isFilled">If "on" is passed the circle can be filled, otherwise by default "none" it is outlined</param>
+        public void DrawCircle(int radius, String penColor = "black", String isFilled = "none")
+        {
+            // Make a object of Color class. Make it of default color black.
+            Color color = Color.Black;
+
+            // If the color is given, change the color of the pen.
+            if (penColor.Equals("red")) { color = Color.Red; }
+            else if (penColor.Equals("green")) { color = Color.Green; }
+
+            // Remove the cursor from the old location. It also restore the canvas.
+            RemoveCursor();
+
+            // Create an object of Circle class to draw the circle. Give the radius, color and the cursor cordinates.
+            Circle circle = new Circle(color, xPos, yPos, radius);
+
+            // If the circle is to be filled, fill it.
+            if (isFilled.Equals("on"))
+            {
+                // If the fill is "on" then draw a circle filled with color.
+                circle.drawFilled(g);
+            }
+            else
+            {
+                // If the fill is "none" then by default draw a outlined circle.
+                circle.drawOutLined(g);
+            }
+
+            // At the new location, save the pixels of the location where the cursor is to be drawn.
+            SaveStateBeforeCursor();
+
+            // Draw the cursor on the new location.
+            DrawCursor();
+        }
+
     }
 }
