@@ -258,6 +258,16 @@ namespace aseassignment
             Application.Exit();
         }
 
+        /// <summary>
+        /// Called when run button is pressed. It will run the program.
+        /// </summary>
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            // Run the program. It will run all the commands in the text box.
+            executerun(rtbInput.Text);
+        }
 
 
     }
