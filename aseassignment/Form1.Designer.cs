@@ -86,6 +86,7 @@
             rtbInput.Size = new Size(628, 398);
             rtbInput.TabIndex = 2;
             rtbInput.Text = "";
+           
             // 
             // lbProgramSyntex
             // 
@@ -95,7 +96,7 @@
             lbProgramSyntex.Size = new Size(113, 20);
             lbProgramSyntex.TabIndex = 7;
             lbProgramSyntex.Text = "Program Syntex";
-            lbProgramSyntex.Click += lbProgramSyntex_Click;
+           
             // 
             // btnRun
             // 
@@ -125,7 +126,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(628, 27);
             textBox1.TabIndex = 1;
-            textBox1.TextChanged += textBox1_TextChanged;
+           
             // 
             // label3
             // 
@@ -188,7 +189,7 @@
             btnBrowse.TabIndex = 5;
             btnBrowse.Text = "Browse";
             btnBrowse.UseVisualStyleBackColor = true;
-            btnBrowse.Click += btnBrowse_Click;
+           
             // 
             // Form1
             // 
