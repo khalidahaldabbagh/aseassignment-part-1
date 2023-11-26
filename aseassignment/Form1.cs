@@ -309,5 +309,44 @@ namespace aseassignment
             }
         }
 
+        /// <summary>
+        /// This method will execute the program line by line. It will execute the commands in the richTextBox.
+        /// It will ignore the empty lines. It will not start if the program is syntecally incorrect.
+        /// </summary>
+        /// <param name="input">The multi-command Strind seperated by newline character</param>
+        private void executerun(String input)
+        {
+            try
+            {
+                // Check if the input program is correct.
+                if (Parser.isValidSyntex(input))
+                {
+                    // Split the input program into line commands.
+                    String[] commands = input.Split('\n');
+
+                    // Loop through all the commands.
+                    foreach (String command in commands)
+                    {
+                        // skip if the line is empty
+                        if (command.Equals("")) continue;
+
+                        // normally execute the command
+                        execute(command);
+                    }
+                }
+                else
+                {
+                    // Display the error message if the program is not correct.
+                    MessageBox.Show("Invalid program, please try again", "Syntex Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception)
+            {
+                // Display the error message if a exception is thrown.
+                MessageBox.Show("Invalid program, please try again", "Syntex Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
     }
 }
