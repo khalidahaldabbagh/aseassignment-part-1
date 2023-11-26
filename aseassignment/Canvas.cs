@@ -234,5 +234,48 @@ namespace aseassignment
             DrawCursor();
         }
 
+        /// <summary>
+        /// Draw a triangle of the given size on the canvas with the cursor at the center.
+        /// The color of the triangle is given by the penColor.
+        /// The triangle can be filled if isFilled is "on".
+        /// </summary>
+        /// <param name="size">Size of the triangle, the distance from boundry to the cursor</param>
+        /// <param name="penColor">The color of which the triangle will be drawn, default is black</param>
+        /// <param name="isFilled">If "on" is passed the triangle can be filled, otherwise by default "none" it is outlined</param>
+        public void DrawTriangle(int size, String penColor = "black", String isFilled = "none")
+        {
+            // Make a object of Color class. Make it of default color black.
+            Color color = Color.Black;
+
+            // If the color is given, change the color of the pen.
+            if (penColor.Equals("red")) { color = Color.Red; }
+            else if (penColor.Equals("green")) { color = Color.Green; }
+
+            // Remove the cursor from the old location. It also restore the canvas.
+            RemoveCursor();
+
+            // Create an object of Triangle class to draw the triangle. Give the size, color and the cursor cordinates.
+            Triangle triangle = new Triangle(color, xPos, yPos, size);
+
+            // If the triangle is to be filled, fill it.
+            if (isFilled.Equals("on"))
+            {
+                // If the fill is "on" then draw a triangle filled with color.
+                triangle.drawFilled(g);
+            }
+            else
+            {
+                // If the fill is "none" then by default draw a outlined triangle.
+                triangle.drawOutLined(g);
+            }
+
+            // At the new location, save the pixels of the location where the cursor is to be drawn.
+            SaveStateBeforeCursor();
+
+            // Draw the cursor on the new location.
+            DrawCursor();
+        }
+
+
     }
 }
