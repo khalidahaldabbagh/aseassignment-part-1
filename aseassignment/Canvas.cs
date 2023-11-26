@@ -319,6 +319,34 @@ namespace aseassignment
             DrawCursor();
         }
 
+        /// <summary>
+        /// Method to clear the canvas (picturebox). It will clear all the drawings and restore the canvas to the default color.
+        /// It will also reset the cursor to the initial (0,0) position.
+        /// </summary>
+        public void Clear()
+        {
+            // Clear all the drawing or shapes on the canvas and make all the pixels default dim grey color.
+            g.Clear(Color.DimGray);
+
+            // This method is used to store the pixels where the cursor will be drawn on.
+            SaveStateBeforeCursor();
+
+            // This will move the cursor to the initial position (0,0) on the canvas.
+            MoveTo(xPos, yPos);
+        }
+
+        /// <summary>
+        /// Destructor for the canvas class
+        ///  destructor is a special method that is automatically called when an object is about to be destroyed (i.e., when it goes out of scope or when the Dispose method is called explicitly).
+        ///  The purpose of the destructor is to perform cleanup operations, such as releasing resources, closing files, or deallocating memory.
+        /// </summary>
+        ~Canvas()
+        {
+            // The purpose of calling Dispose in the destructor is to ensure that resources are properly released when an instance of the Canvas class is no longer needed.
+            // This is particularly important for objects that encapsulate or use unmanaged resources,
+            // as failing to release these resources could lead to memory leaks or other issues.
+            g.Dispose();
+        }
 
     }
 }
