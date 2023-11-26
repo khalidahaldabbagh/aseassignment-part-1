@@ -347,6 +347,44 @@ namespace aseassignment
             }
         }
 
+        /// <summary>
+        /// Called when the form is done resizing. It is used to resize and fit the canvas (picturebox).
+        /// It is also used to redraw the canvas with the commands that are given before the canvas size changed.
+        /// </summary>
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
+            // If the form has same dimesions, do nothing. It means if the form is moved do nothing.
+            if (this.Size.Width == formWidth && this.Size.Height == formHeight) return;
+
+            // If the form is resized, then resize the canvas (picturebox) to fit the form.
+            Canvas = new Canvas(pbOutput);
+
+            // Redraw the canvas with the commands that are given before the canvas size changed.
+            executerun(commandsGiven);
+        }
+
+        /// <summary>
+        /// Called when the form is maximized. It is used to resize and fit the canvas (picturebox).
+        /// It is also used to redraw the canvas with the commands that are given before the canvas size changed.
+        /// </summary>
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            // To catch the event when form is maximized.
+            if (WindowState == FormWindowState.Maximized)
+            {
+                // If the form is resized, then resize the canvas (picturebox) to fit the form.
+                Canvas = new Canvas(pbOutput);
+
+                // Redraw the canvas with the commands that are given before the canvas size changed.
+                executerun(commandsGiven);
+            }
+        }
+
+
 
     }
 }
