@@ -276,6 +276,49 @@ namespace aseassignment
             DrawCursor();
         }
 
+        /// <summary>
+        /// Draw a rectangle of the given width and height on the canvas with the cursor at the center.
+        /// The color of the rectangle is given by the penColor.
+        /// The rectangle can be filled if isFilled is "on".
+        /// </summary>
+        /// <param name="width">The width of the rectangle</param>
+        /// <param name="height">The height of the rectangle</param>
+        /// <param name="penColor">The color of which the rectangle will be drawn, default is black</param>
+        /// <param name="isFilled">If "on" is passed the rectangle can be filled, otherwise by default "none" it is outlined</param>
+        public void DrawRectangle(int width, int height, String penColor = "black", String isFilled = "none")
+        {
+            // Make a object of Color class. Make it of default color black.
+            Color color = Color.Black;
+
+            // If the color is given, change the color of the pen.
+            if (penColor.Equals("red")) { color = Color.Red; }
+            else if (penColor.Equals("green")) { color = Color.Green; }
+
+            // Remove the cursor from the old location. It also restore the canvas.
+            RemoveCursor();
+
+            // Create an object of Rectangle class to draw the rectangle. Give the width, height, color and the cursor cordinates.
+            Rectangle rectangle = new Rectangle(color, xPos, yPos, width, height);
+
+            // If the rectangle is to be filled, fill it.
+            if (isFilled.Equals("on"))
+            {
+                // If the fill is "on" then draw a rectangle filled with color.
+                rectangle.drawFilled(g);
+            }
+            else
+            {
+                // If the fill is "none" then by default draw a outlined rectangle.
+                rectangle.drawOutLined(g);
+            }
+
+            // At the new location, save the pixels of the location where the cursor is to be drawn.
+            SaveStateBeforeCursor();
+
+            // Draw the cursor on the new location.
+            DrawCursor();
+        }
+
 
     }
 }
