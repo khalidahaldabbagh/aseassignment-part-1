@@ -1,0 +1,19 @@
+moveto 725,440
+rectangle 1450,900 pen red fill on
+circle 900 pen green fill on
+circle 500 pen red
+circle 600 pen red
+circle 700 pen red
+circle 800 pen red
+circle 900 pen red
+triangle 900 pen black fill on
+circle 400 pen green fill on
+circle 100 pen red
+circle 200 pen red
+circle 300 pen red
+circle 1000
+circle 1100
+circle 1200
+circle 1300
+circle 1400
+circle 1500
