@@ -16,7 +16,7 @@ namespace aseassignment
     /// drawto (to draw a line on the canvas), clear (to clear the canvas), etc.
     /// It also contains the methods that draw the 3 basic shapes (circle, triangle and rectangle).
     /// </summary>
-    class Canvas
+    public class Canvas
     {
         // This graphic object is used to draw different shapes on the canvas. 
         Graphics g;

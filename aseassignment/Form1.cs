@@ -21,16 +21,61 @@ namespace aseassignment
     /// </summary>
     public partial class Form1 : Form
     {
-        /* The canvas object. It will be used to draw the shapes on the the object it's been passed.
-         * Here we will be using the canvas object to draw the shapes on a picturebox.
-         */
-        Canvas Canvas;
+        /* The canvas object. It will be used to draw the shapes on the the object it's been passed.Here we will be using the canvas object to draw the shapes on a picturebox.*/
+
+        // This line declares a private instance variable of type Canvas named _thisCanvas. The private keyword indicates that this variable can only be accessed within the class it is declared in.
+        
+        private Canvas _thisCanvas;
+        
+        // This line declares a public instance variable of type Canvas named Canvas. The public keyword indicates that this variable can be accessed from outside the class.
+        //it has the same type as the private variable declared earlier, but it's a different variable.
+        
+        public Canvas Canvas;
+
 
         // It will contain all the commands that are used to make the current canvas (picturebox).
-        String commandsGiven = "";
+        public string CommandsExecuted = "";
 
         // The width and height of the current form
         int formWidth, formHeight;
+
+        // The varibles used to store the integer values in the program.
+        //This declares a generic list (List<>) that can hold elements of type Tuple<string, int>. Each element in the list is a tuple consisting of a string and an integer.
+        //  It's a list that will store tuples, where each tuple contains a string and an integer.
+        //(= new List<Tuple<string, int>>();) : This initializes the list by creating a new instance of List<Tuple<string, int>>.
+        //This means that when an object of the class is created, variables will be an empty list ready to store tuples.
+        
+        private List<Tuple<string, int>> variables = new List<Tuple<string, int>>();
+
+        // The index at which the loop starts.
+        private int loopStart = 0;
+
+        // Static instance of the Form1 class to be used in other classes.
+        //This line declares a private static variable named instance of type Form1.
+        //The static keyword means that this variable is shared among all instances of the class, and it's initially set to null (the ? indicates that it can be nullable).
+       
+        private static Form1? instance;
+
+        //This public static property serves as a getter for the singleton instance of the Form1 class. 
+        //This implementation ensures that only one instance of Form1 is created,
+        //and it provides a way to access that instance globally through the Instance property.
+
+        public static Form1 Instance
+        {
+            //The getter block (get) checks whether the instance variable is null.
+            //If it is, a new instance of Form1 is created and assigned to instance. Subsequent calls to Instance will return the existing instance.
+           
+            get
+            {
+                // If there is no instance of the Form1 class, create one.
+                if (instance == null)
+                {
+                    instance = new Form1();
+                }
+                // Return the instance of the Form1 class.
+                return instance;
+            }
+        }
 
         /// <summary>
         /// Constructor for the Form class. It will initialize all the GUI coponents set the default values to the attributes.
@@ -225,7 +270,7 @@ namespace aseassignment
                 if (!(command.Equals("clear") || command.Equals("reset") || command.Equals("run")))
                 {
                     // Add the commands in the commandsGiven variable to provide input when the canvas size changes and it is redrawn.
-                    commandsGiven += command + "\n";
+                    CommandsExecuted += command + "\n";
                 }
                 else
                 {
@@ -234,7 +279,7 @@ namespace aseassignment
                         /* commandsGiven is used to store the commands that are used when the canvas (picturebox) size changes and it is redrawn.
                          * If it is not "run", then the commandsGiven variable is cleared to avoid the commands being repeated when the canvas is redrawn.
                          */
-                        commandsGiven = ""; // Clear the commandsGiven variable.
+                        CommandsExecuted = ""; // Clear the commandsGiven variable.
                 }
 
                 // The most important line. It will call the paint function of the picturebox to re-paint the changes in the picturebox
@@ -366,7 +411,7 @@ namespace aseassignment
             Canvas = new Canvas(pbOutput);
 
             // Redraw the canvas with the commands that are given before the canvas size changed.
-            executerun(commandsGiven);
+            executerun(CommandsExecuted);
         }
 
         /// <summary>
@@ -384,7 +429,7 @@ namespace aseassignment
                 Canvas = new Canvas(pbOutput);
 
                 // Redraw the canvas with the commands that are given before the canvas size changed.
-                executerun(commandsGiven);
+                executerun(CommandsExecuted);
             }
         }
 
