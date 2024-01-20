@@ -529,9 +529,5 @@ namespace aseassignment
             openFileDialog.Dispose();
         }
 
-        private void rtbInput_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
