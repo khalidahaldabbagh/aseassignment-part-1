@@ -948,11 +948,14 @@ namespace aseassignment
             else
             {
                 // Display the error message if the file does not exists.
-                MessageBox.Show("No file found at the given path.", "File Not Found", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                lbFileStatus.Text = "File does not exists.";
+                lbFileStatus.ForeColor = Color.Red;
             }
             // Free the dialog box resources.
             openFileDialog.Dispose();
         }
+
+
 
         /// <summary>
         /// Called when the save button is clicked. It will save the data to the path provided or selected through file dialog.
@@ -988,7 +991,8 @@ namespace aseassignment
                                     sw.Write(rtbInput.Text);
                                 }
                                 // Display the success message.
-                                MessageBox.Show("The file has been save successfully.", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                lbFileStatus.Text = "File saved successfully.";
+                                lbFileStatus.ForeColor = Color.Green;
                             }
                         }
                         else
@@ -999,13 +1003,15 @@ namespace aseassignment
                                 sw.Write(rtbInput.Text);
                             }
                             // Display the success message.
-                            MessageBox.Show("The file has been save successfully.", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            lbFileStatus.Text = "File saved successfully.";
+                            lbFileStatus.ForeColor = Color.Green;
                         }
                     }
                     catch (IOException)
                     {
                         // Display the error message if the file is in use.
-                        MessageBox.Show("There was an error saving the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        lbFileStatus.Text = "There was an error saving the file.";
+                        lbFileStatus.ForeColor = Color.Red;
                     }
                 }
                 // Free the dialog box resources.
@@ -1025,7 +1031,8 @@ namespace aseassignment
                                 sw.Write(rtbInput.Text);
                             }
                             // Display the success message.
-                            MessageBox.Show("The file has been save successfully.", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            lbFileStatus.Text = "File saved successfully.";
+                            lbFileStatus.ForeColor = Color.Green;
                         }
                     }
                     else
@@ -1036,11 +1043,16 @@ namespace aseassignment
                             sw.Write(rtbInput.Text);
                         }
                         // Display the success message.
-                        MessageBox.Show("The file has been save successfully.", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        lbFileStatus.Text = "File saved successfully.";
+                        lbFileStatus.ForeColor = Color.Green;
                     }
                 }
                 // Display the error message if an exception is thrown.
-                catch (Exception) { MessageBox.Show("There was an error saving the file. The path entered can be incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                catch (Exception)
+                {
+                    lbFileStatus.Text = "There was an error saving the file.";
+                    lbFileStatus.ForeColor = Color.Red;
+                }
             }
         }
 
