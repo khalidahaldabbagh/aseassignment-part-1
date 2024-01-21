@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pbOutput = new PictureBox();
             textBox1 = new TextBox();
             rtbInput = new RichTextBox();
@@ -43,6 +44,10 @@
             label1 = new Label();
             openFileDialog = new OpenFileDialog();
             btnBrowse = new Button();
+            tColorTransition = new System.Windows.Forms.Timer(components);
+            lbStatus = new Label();
+            lbFileStatus = new Label();
+            btnNewProgram = new Button();
             ((System.ComponentModel.ISupportInitialize)pbOutput).BeginInit();
             SuspendLayout();
             // 
@@ -50,39 +55,41 @@
             // 
             pbOutput.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbOutput.BackColor = Color.DimGray;
-            pbOutput.Location = new Point(535, 53);
-            pbOutput.Margin = new Padding(4, 2, 4, 2);
+            pbOutput.Location = new Point(869, 85);
+            pbOutput.Margin = new Padding(5, 5, 5, 5);
             pbOutput.Name = "pbOutput";
-            pbOutput.Size = new Size(415, 494);
+            pbOutput.Size = new Size(674, 706);
             pbOutput.TabIndex = 0;
             pbOutput.TabStop = false;
             // 
             // textBox1
             // 
             textBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            textBox1.Location = new Point(44, 520);
-            textBox1.Margin = new Padding(4, 2, 4, 2);
+            textBox1.Location = new Point(70, 818);
+            textBox1.Margin = new Padding(5, 5, 5, 5);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(426, 27);
+            textBox1.Size = new Size(690, 39);
             textBox1.TabIndex = 1;
+            textBox1.TextChanged += textBox1_TextChanged;
             textBox1.KeyDown += textBox1_KeyDown;
             // 
             // rtbInput
             // 
             rtbInput.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            rtbInput.Location = new Point(44, 88);
-            rtbInput.Margin = new Padding(4, 2, 4, 2);
+            rtbInput.Location = new Point(70, 141);
+            rtbInput.Margin = new Padding(5, 5, 5, 5);
             rtbInput.Name = "rtbInput";
-            rtbInput.Size = new Size(426, 406);
+            rtbInput.Size = new Size(690, 556);
             rtbInput.TabIndex = 2;
             rtbInput.Text = "";
+            rtbInput.TextChanged += rtbInput_TextChanged;
             // 
             // btnRun
             // 
-            btnRun.Location = new Point(400, 53);
-            btnRun.Margin = new Padding(4, 2, 4, 2);
+            btnRun.Location = new Point(650, 85);
+            btnRun.Margin = new Padding(5, 5, 5, 5);
             btnRun.Name = "btnRun";
-            btnRun.Size = new Size(70, 29);
+            btnRun.Size = new Size(114, 46);
             btnRun.TabIndex = 3;
             btnRun.Text = "Run";
             btnRun.UseVisualStyleBackColor = true;
@@ -90,10 +97,10 @@
             // 
             // btnSyntax
             // 
-            btnSyntax.Location = new Point(327, 53);
-            btnSyntax.Margin = new Padding(4, 2, 4, 2);
+            btnSyntax.Location = new Point(531, 85);
+            btnSyntax.Margin = new Padding(5, 5, 5, 5);
             btnSyntax.Name = "btnSyntax";
-            btnSyntax.Size = new Size(66, 29);
+            btnSyntax.Size = new Size(107, 46);
             btnSyntax.TabIndex = 4;
             btnSyntax.Text = "check";
             btnSyntax.UseVisualStyleBackColor = true;
@@ -102,10 +109,10 @@
             // btnExit
             // 
             btnExit.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnExit.Location = new Point(856, 573);
-            btnExit.Margin = new Padding(4, 2, 4, 2);
+            btnExit.Location = new Point(1391, 933);
+            btnExit.Margin = new Padding(5, 5, 5, 5);
             btnExit.Name = "btnExit";
-            btnExit.Size = new Size(94, 29);
+            btnExit.Size = new Size(153, 46);
             btnExit.TabIndex = 5;
             btnExit.Text = "&Exit";
             btnExit.UseVisualStyleBackColor = true;
@@ -114,29 +121,29 @@
             // tbFilePath
             // 
             tbFilePath.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            tbFilePath.Location = new Point(44, 573);
-            tbFilePath.Margin = new Padding(4);
+            tbFilePath.Location = new Point(70, 933);
+            tbFilePath.Margin = new Padding(5, 6, 5, 6);
             tbFilePath.Name = "tbFilePath";
-            tbFilePath.Size = new Size(426, 27);
+            tbFilePath.Size = new Size(994, 39);
             tbFilePath.TabIndex = 6;
             // 
             // lbProgramSyntex
             // 
             lbProgramSyntex.AutoSize = true;
-            lbProgramSyntex.Location = new Point(44, 66);
-            lbProgramSyntex.Margin = new Padding(4, 0, 4, 0);
+            lbProgramSyntex.Location = new Point(70, 104);
+            lbProgramSyntex.Margin = new Padding(5, 0, 5, 0);
             lbProgramSyntex.Name = "lbProgramSyntex";
-            lbProgramSyntex.Size = new Size(113, 20);
+            lbProgramSyntex.Size = new Size(181, 32);
             lbProgramSyntex.TabIndex = 7;
             lbProgramSyntex.Text = "Program Syntex";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(535, 31);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(869, 50);
+            label2.Margin = new Padding(5, 0, 5, 0);
             label2.Name = "label2";
-            label2.Size = new Size(55, 20);
+            label2.Size = new Size(89, 32);
             label2.TabIndex = 8;
             label2.Text = "Canvas";
             // 
@@ -144,20 +151,20 @@
             // 
             label3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label3.AutoSize = true;
-            label3.Location = new Point(48, 498);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(70, 781);
+            label3.Margin = new Padding(5, 0, 5, 0);
             label3.Name = "label3";
-            label3.Size = new Size(109, 20);
+            label3.Size = new Size(176, 32);
             label3.TabIndex = 9;
             label3.Text = "Command Line";
             // 
             // btnLoad
             // 
             btnLoad.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnLoad.Location = new Point(652, 573);
-            btnLoad.Margin = new Padding(4, 2, 4, 2);
+            btnLoad.Location = new Point(1194, 933);
+            btnLoad.Margin = new Padding(5, 5, 5, 5);
             btnLoad.Name = "btnLoad";
-            btnLoad.Size = new Size(94, 29);
+            btnLoad.Size = new Size(88, 46);
             btnLoad.TabIndex = 5;
             btnLoad.Text = "&Load";
             btnLoad.UseVisualStyleBackColor = true;
@@ -166,10 +173,10 @@
             // btnSave
             // 
             btnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnSave.Location = new Point(754, 573);
-            btnSave.Margin = new Padding(4, 2, 4, 2);
+            btnSave.Location = new Point(1292, 933);
+            btnSave.Margin = new Padding(5, 5, 5, 5);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(94, 29);
+            btnSave.Size = new Size(88, 46);
             btnSave.TabIndex = 5;
             btnSave.Text = "&Save";
             btnSave.UseVisualStyleBackColor = true;
@@ -179,10 +186,10 @@
             // 
             label1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label1.AutoSize = true;
-            label1.Location = new Point(44, 549);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(70, 894);
+            label1.Margin = new Padding(5, 0, 5, 0);
             label1.Name = "label1";
-            label1.Size = new Size(64, 20);
+            label1.Size = new Size(104, 32);
             label1.TabIndex = 10;
             label1.Text = "File Path";
             // 
@@ -193,21 +200,60 @@
             // btnBrowse
             // 
             btnBrowse.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnBrowse.Location = new Point(550, 573);
-            btnBrowse.Margin = new Padding(4, 2, 4, 2);
+            btnBrowse.Location = new Point(1079, 933);
+            btnBrowse.Margin = new Padding(5, 5, 5, 5);
             btnBrowse.Name = "btnBrowse";
-            btnBrowse.Size = new Size(94, 29);
+            btnBrowse.Size = new Size(104, 46);
             btnBrowse.TabIndex = 5;
             btnBrowse.Text = "&Browse";
             btnBrowse.UseVisualStyleBackColor = true;
             btnBrowse.Click += btnBrowse_Click;
             // 
+            // tColorTransition
+            // 
+            tColorTransition.Interval = 500;
+            /tColorTransition.Tick += tColorTransition_Tick;
+            // 
+            // lbStatus
+            // 
+            lbStatus.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lbStatus.AutoSize = true;
+            lbStatus.Location = new Point(70, 706);
+            lbStatus.Margin = new Padding(5, 0, 5, 0);
+            lbStatus.Name = "lbStatus";
+            lbStatus.Size = new Size(0, 32);
+            lbStatus.TabIndex = 9;
+            // 
+            // lbFileStatus
+            // 
+            lbFileStatus.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lbFileStatus.ForeColor = SystemColors.ControlText;
+            lbFileStatus.Location = new Point(179, 894);
+            lbFileStatus.Margin = new Padding(5, 0, 5, 0);
+            lbFileStatus.Name = "lbFileStatus";
+            lbFileStatus.Size = new Size(889, 32);
+            lbFileStatus.TabIndex = 9;
+            lbFileStatus.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // btnNewProgram
+            // 
+            btnNewProgram.Location = new Point(317, 85);
+            btnNewProgram.Margin = new Padding(5, 5, 5, 5);
+            btnNewProgram.Name = "btnNewProgram";
+            btnNewProgram.Size = new Size(203, 46);
+            btnNewProgram.TabIndex = 4;
+            btnNewProgram.Text = "New Program";
+            btnNewProgram.UseVisualStyleBackColor = true;
+            btnNewProgram.Click += btnNewProgram_Click;
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(964, 627);
+            ClientSize = new Size(1565, 1003);
             Controls.Add(label1);
+            Controls.Add(lbStatus);
+            Controls.Add(lbFileStatus);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(lbProgramSyntex);
@@ -216,13 +262,15 @@
             Controls.Add(btnSave);
             Controls.Add(btnLoad);
             Controls.Add(btnExit);
+            Controls.Add(btnNewProgram);
             Controls.Add(btnSyntax);
             Controls.Add(btnRun);
             Controls.Add(rtbInput);
             Controls.Add(textBox1);
             Controls.Add(pbOutput);
-            Margin = new Padding(4, 2, 4, 2);
+            Margin = new Padding(5, 5, 5, 5);
             Name = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Simple Programming Language";
             ResizeEnd += Form1_ResizeEnd;
             Resize += Form1_Resize;
@@ -232,8 +280,6 @@
         }
 
         #endregion
-
-        private PictureBox pbOutput;
         private TextBox textBox1;
         private RichTextBox rtbInput;
         private Button btnRun;
@@ -248,5 +294,10 @@
         private Label label1;
         private OpenFileDialog openFileDialog;
         private Button btnBrowse;
+        private System.Windows.Forms.Timer tColorTransition;
+        public PictureBox pbOutput;
+        private Label lbStatus;
+        private Label lbFileStatus;
+        private Button btnNewProgram;
     }
 }

@@ -335,6 +335,243 @@ namespace aseassignment
             return endIfIndex;
         }
 
+        /// <summary>
+        /// The method to execute the single command from the progrom or command line.
+        /// It will take the command and validate it.
+        /// If it is valid, It will parse parameters from the command and use the canvas object to draw the shape.
+        /// </summary>
+        /// <param name="command">The String of commands to be executed</param>
+        public async Task<bool> execute(string command, bool isResize = false, bool resetFromNewProgram = false, Canvas canvas = null)
+        {
+            if (canvas != null)
+            {
+                Canvas = canvas;
+            }
+            else
+            {
+                Canvas = _thisCanvas;
+            }
+
+            Parser parser = new Parser(command);
+            // Check if the command is valid. If it is not valid, it will return false.
+            lbFileStatus.Text = "";
+            if (Parser.isValidSyntex(command))
+            {
+                try
+                {
+                    // Check if the given command is "run". 
+                    if (command.Equals("run"))
+                    {
+                        /* If the command is "run".
+                         * Get the commands from the richTextBox. It will be used to execute the program.
+                         *  await is used in asynchronous programming to make the code wait for the completion of asynchronous
+                         *  tasks without blocking the main thread.
+                         */
+                        if (await IsValidProgram(CommandsExecuted))
+                        {
+                            await executerun(CommandsExecuted);
+                        }
+                        else
+                        {
+                            // Show that the commands are syntecally incorrect.
+                            lbStatus.Text = errorString;
+                            lbStatus.ForeColor = Color.Red;
+                            errorString = "";
+                        }
+                    }
+                    // Check if the command is "clear". 
+                    else if (command.Equals("clear"))
+                    {
+                        /* If the command is "clear".
+                         * Clear the canvas (picturebox).
+                         */
+                        Canvas.Clear();
+                    }
+                    // Check if the command is "reset".
+                    else if (command.Equals("reset"))
+                    {
+                        /* If the command is "reset".
+                         * Clear the canvas (picturebox) and reset it to default. 
+                         * Clear the program box, file path textbox and command line.
+                         */
+                        if (!resetFromNewProgram)
+                        {
+                            rtbInput.Text = "";
+                            textBox1.Text = "";
+                            tbFilePath.Text = "";
+                        }
+                        Canvas.Clear();
+                    }
+                    // Check if the command is "moveto".
+                    else if (parser.getCommandType().Equals("moveto"))
+                    {
+                        /* If the command is "moveto".
+                         * Get the x and y coordinates from the parser object.
+                         * Using canvas object, move the pointer to the given coordinates.
+                         */
+                        int x = GetVariableValue(parser.parameters[0]);
+                        int y = GetVariableValue(parser.parameters[1]);
+                        Canvas.MoveTo(x, y);
+                    }
+                    // Check if the command is "drawto".
+                    else if (parser.getCommandType().Equals("drawto"))
+                    {
+                        /* If the command is "drawto".
+                         * Get the x and y coordinates from the parser object.
+                         * Using canvas object, draw a line from the pointer to the given coordinates.
+                         */
+                        int x = GetVariableValue(parser.parameters[0]);
+                        int y = GetVariableValue(parser.parameters[1]);
+
+                        // Check whether the "pen" argumant was also passed to change the color of the line.
+                        if (parser.getCommandArgsLength() == 2)
+                        {
+                            // Draw line without color.
+                            Canvas.DrawTo(x, y);
+                        }
+                        else
+                        {
+                            // Draw line with color.
+                            Canvas.DrawTo(x, y, parser.parameters[2]);
+                        }
+                    }
+                    // Check if the command is "circle". It will draw a circle with pointer as center.
+                    else if (parser.getCommandType().Equals("circle"))
+                    {
+                        /* If the command is "circle".
+                         * Get the radius from the parser object.
+                         * Using canvas object, draw a circle with pointer as center and given radius.
+                         */
+                        int radius = GetVariableValue(parser.parameters[0]);
+
+                        // Check if only the radius was passed.
+                        if (parser.getCommandArgsLength() == 2)
+                        {
+                            // Draw circle with default color.
+                            Canvas.DrawCircle(radius);
+                        }
+                        // Check if the "pen" argumant was also passed.
+                        else if (parser.getCommandArgsLength() == 4)
+                        {
+                            // Draw outlined circle with given color.
+                            Canvas.DrawCircle(radius, parser.parameters[1]);
+                        }
+                        // Check if the "fill" argumant was also passed.
+                        else if (parser.getCommandArgsLength() == 6)
+                        {
+                            // Draw filled circle with given color.
+                            Canvas.DrawCircle(radius, parser.parameters[1], parser.parameters[2]);
+                        }
+                    }
+                    // Check if the command is "triangle".
+                    else if (parser.getCommandType().Equals("triangle"))
+                    {
+                        /* If the command is "triangle".
+                         * Get the size from the parser object.
+                         * Using canvas object, draw a triangle with pointer as center and given size.
+                         */
+                        int size = GetVariableValue(parser.parameters[0]);
+
+                        // Check if only the size was passed.
+                        if (parser.getCommandArgsLength() == 2)
+                        {
+                            // Draw triangle with default color.
+                            Canvas.DrawTriangle(size);
+                        }
+                        // Check if the "pen" argumant was also passed.
+                        else if (parser.getCommandArgsLength() == 4)
+                        {
+                            // Draw outlined triangle with given color.
+                            Canvas.DrawTriangle(size, parser.parameters[1]);
+                        }
+                        // Check if the "fill" argumant was also passed.
+                        else if (parser.getCommandArgsLength() == 6)
+                        {
+                            // Draw filled triangle with given color.
+                            Canvas.DrawTriangle(size, parser.parameters[1], parser.parameters[2]);
+                        }
+                    }
+                    // Check if the command is "rectangle". It will draw a rectangle with pointer as center.
+                    else if (parser.getCommandType().Equals("rectangle"))
+                    {
+                        /* If the command is "rectangle".
+                         * Get the width and height from the parser object.
+                         * Using canvas object, draw a rectangle with pointer as center and given width and height.
+                         */
+                        int width = GetVariableValue(parser.parameters[0]);
+                        int height = GetVariableValue(parser.parameters[1]);
+
+                        // Check if only the width and height were passed.
+                        if (parser.getCommandArgsLength() == 2)
+                        {
+                            // Draw rectangle with default color.
+                            Canvas.DrawRectangle(width, height);
+                        }
+                        // Check if the "pen" argumant was also passed.
+                        else if (parser.getCommandArgsLength() == 4)
+                        {
+                            // Draw outlined rectangle with given color.
+                            Canvas.DrawRectangle(width, height, parser.parameters[2]);
+                        }
+                        // Check if the "fill" argumant was also passed.
+                        else if (parser.getCommandArgsLength() == 6)
+                        {
+                            // Draw filled rectangle with given color.
+                            Canvas.DrawRectangle(width, height, parser.parameters[2], parser.parameters[3]);
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Syntex Error");
+                }
+
+                // Check if the command is not of any sigle argument command types.
+                if (!(command.Equals("clear") || command.Equals("reset") || command.Equals("run")))
+                {
+                    // Add the commands in the CommandsExecuted variable to provide input when the canvas size changes and it is redrawn.
+                    if (!isResize)
+                    {
+                        CommandsExecuted += command + "\n";
+                    }
+                }
+                else
+                {
+                    // Check if the command is not "run".
+                    if (!command.Equals("run"))
+                        /* CommandsExecuted is used to store the commands that are used when the canvas (picturebox) size changes and it is redrawn.
+                         * If it is not "run", then the CommandsExecuted variable is cleared to avoid the commands being repeated when the canvas is redrawn.
+                         */
+                        CommandsExecuted = ""; // Clear the CommandsExecuted variable.
+                }
+
+                // The most important line. It will call the paint function of the picturebox to re-paint the changes in the picturebox
+                pbOutput.Invalidate();
+            }
+            else
+            {
+                if (getVariable(command) == false)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (!isResize)
+                    {
+                        // Add the commands in the CommandsExecuted variable to provide input when the canvas size changes and it is redrawn.
+                        CommandsExecuted += command + "\n";
+                    }
+                }
+            }
+
+            // Return true if the command is executed successfully.
+            return true;
+        }
+
 
         /// <summary>
         /// Called when the exit button is pressed. It will exit the application.
@@ -347,57 +584,7 @@ namespace aseassignment
             Application.Exit();
         }
 
-        /// <summary>
-        /// Called when run button is pressed. It will run the program.
-        /// </summary>
-        /// <param name="sender">The object that is the sender of this event</param>
-        /// <param name="e">The arguments passed on this event</param>
-        private void btnRun_Click(object sender, EventArgs e)
-        {
-            // Run the program. It will run all the commands in the text box.
-            executerun(rtbInput.Text);
-        }
-
-        /// <summary>
-        /// Called when the "enter" key is pressed while typing in command line. It will run the command.
-        /// </summary>
-        /// <param name="sender">The object that is the sender of this event</param>
-        /// <param name="e">The arguments passed on this event</param>
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            // Check if the "enter" key is pressed.
-            if (e.KeyCode == Keys.Enter)
-            {
-                // If the command executes successfully then empty the commandline.
-                if (execute(textBox1.Text)) textBox1.Text = "";
-
-                // The event was handled. So, set the Handled property to true.
-                e.Handled = true;
-
-                // Do not send the key to the control.
-                e.SuppressKeyPress = true;
-            }
-        }
-
-        /// <summary>
-        /// Called when syntex check button is clicked. It will check the program whether is syntecally correct or not.
-        /// </summary>
-        /// <param name="sender">The object that is the sender of this event</param>
-        /// <param name="e">The arguments passed on this event</param>
-        private void btnSyntax_Click(object sender, EventArgs e)
-        {
-            // Check the program whether is syntecally correct or not.
-            if (Parser.isValidSyntex(rtbInput.Text))
-            {
-                // Display the message if the program is syntecally correct.
-                MessageBox.Show("All the command are written correctly.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                // Display the message if the program is not syntecally correct.
-                MessageBox.Show("There is an error in the given program.", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
+      
 
         /// <summary>
         /// This method will execute the program line by line. It will execute the commands in the richTextBox.
