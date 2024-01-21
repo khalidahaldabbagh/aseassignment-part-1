@@ -863,18 +863,36 @@ namespace aseassignment
         /// </summary>
         /// <param name="sender">The object that is the sender of this event</param>
         /// <param name="e">The arguments passed on this event</param>
-        private void Form1_ResizeEnd(object sender, EventArgs e)
+        private async void Form1_ResizeEnd(object sender, EventArgs e)
         {
             // If the form has same dimesions, do nothing. It means if the form is moved do nothing.
             if (this.Size.Width == formWidth && this.Size.Height == formHeight) return;
 
-            // If the form is resized, then resize the canvas (picturebox) to fit the form.
-            Canvas = new Canvas(pbOutput);
+            // Check if the form is size is increased.
+            if (this.Size.Width + this.Size.Height > formWidth + formHeight)
+            {
+                // If the form is resized, then resize the canvas (picturebox) to fit the form.
+                Canvas = new Canvas(pbOutput);
 
-            // Redraw the canvas with the commands that are given before the canvas size changed.
-            executerun(CommandsExecuted);
+                // Store the form size
+                formWidth = this.Size.Width;
+                formHeight = this.Size.Height;
+
+                // Check if the program is syntecally correct
+                if (await IsValidProgram(rtbInput.Text))
+                {
+                    // Redraw the canvas with the commands that are given before the canvas size changed.
+                    await executerun(CommandsExecuted, true);
+                }
+                else
+                {
+                    // Show that the commands are syntecally incorrect.
+                    lbStatus.Text = errorString;
+                    lbStatus.ForeColor = Color.Red;
+                    errorString = "";
+                }
+            }
         }
-
 
 
         /// <summary>
@@ -883,7 +901,7 @@ namespace aseassignment
         /// </summary>
         /// <param name="sender">The object that is the sender of this event</param>
         /// <param name="e">The arguments passed on this event</param>
-        private void Form1_Resize(object sender, EventArgs e)
+        private async void Form1_Resize(object sender, EventArgs e)
         {
             // To catch the event when form is maximized.
             if (WindowState == FormWindowState.Maximized)
@@ -891,8 +909,19 @@ namespace aseassignment
                 // If the form is resized, then resize the canvas (picturebox) to fit the form.
                 Canvas = new Canvas(pbOutput);
 
-                // Redraw the canvas with the commands that are given before the canvas size changed.
-                executerun(CommandsExecuted);
+                // Check if the program is syntecally correct
+                if (await IsValidProgram(rtbInput.Text))
+                {
+                    // Redraw the canvas with the commands that are given before the canvas size changed.
+                    await executerun(CommandsExecuted, true);
+                }
+                else
+                {
+                    // Show that the commands are syntecally incorrect.
+                    lbStatus.Text = errorString;
+                    lbStatus.ForeColor = Color.Red;
+                    errorString = "";
+                }
             }
         }
 
