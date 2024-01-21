@@ -70,7 +70,7 @@ namespace aseassignment
                 string[] commands = getCommandArgs();
 
                 // First argument is the command type and its parameters are cordinates which are seperated by comma.
-                String[] values = commands[1].Split(',');
+                String[] values = commands[1].Trim().Split(',');
 
                 // The list of parameters to be returned.  Initializes a new list named parameters to store the extracted values.
                 List<String> parameters = new List<string>();
@@ -133,12 +133,27 @@ namespace aseassignment
                                 String[] parameters = parts[1].Split(',');
 
                                 // Check if the parameters are of valid length 1 or 2.
-                                if (parameters.Length == 1 || parameters.Length == 2) 
+                                if (parameters.Length == 1 || parameters.Length == 2)
                                 {
                                     // Check if the parameters are of integer data type as they are cordinates.
+                                    // We will also check if the parameters are in the form of variables or not.
                                     // We used try catch here as if the parameters are not of integer data type then it will throw an exception.
-                                    try { Convert.ToInt32(parameters[0]); } catch (Exception) { return false; }
-                                    if (parameters.Length == 2) try { Convert.ToInt32(parameters[1]); } catch (Exception) { return false; }
+                                    try
+                                    {
+                                        // If no variable is found or the parameter is not integer then it will throw an exception.
+                                        if (Form1.Instance.GetVariableValue(parameters[0]) == -1) { return false; }
+                                    }
+                                    catch (Exception) { throw new Exception("1st Parameter Error"); }
+
+                                    if (parameters.Length == 2)
+                                    {
+                                        try
+                                        {
+                                            // If no variable is found or the parameter is not integer then it will throw an exception.
+                                            if (Form1.Instance.GetVariableValue(parameters[1]) == -1) { return false; }
+                                        }
+                                        catch (Exception) { throw new Exception("2nd Parameter Error"); }
+                                    }
                                 }
                                 else { return false; }
                             }

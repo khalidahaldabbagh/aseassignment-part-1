@@ -21,14 +21,13 @@ namespace aseassignment
     /// </summary>
     public partial class Form1 : Form
     {
-        /* The canvas object. It will be used to draw the shapes on the the object it's been passed.Here we will be using the canvas object to draw the shapes on a picturebox.*/
-
+        //The canvas object. It will be used to draw the shapes on the the object it's been passed.Here we will be using the canvas object to draw the shapes on a picturebox.
         // This line declares a private instance variable of type Canvas named _thisCanvas. The private keyword indicates that this variable can only be accessed within the class it is declared in.
         
         private Canvas _thisCanvas;
         
-        // This line declares a public instance variable of type Canvas named Canvas. The public keyword indicates that this variable can be accessed from outside the class.
-        //it has the same type as the private variable declared earlier, but it's a different variable.
+        // This line declares a public instance variable of type Canvas named Canvas.
+        // The public keyword indicates that this variable can be accessed from outside the class.
         
         public Canvas Canvas;
 
@@ -78,21 +77,131 @@ namespace aseassignment
         }
 
         /// <summary>
-        /// Constructor for the Form class. It will initialize all the GUI coponents set the default values to the attributes.
+        /// Constructor for the Form class. It will initialize all the GUI components set the default values to the attributes.
         /// It will also set the canvas object to the picturebox. and store the form dimensions in the attributes.
         /// </summary>
-        public Form1()
+        private Form1()
         {
             // Initialize the GUI components
             InitializeComponent();
 
             // Set the canvas object to the picturebox. It will be used to draw the shapes on the picturebox.
-            Canvas = new Canvas(pbOutput);
+            _thisCanvas = new Canvas(pbOutput);
+            Canvas = _thisCanvas;
 
             // Set the form dimensions to the attributes.
             formWidth = this.Size.Width;
             formHeight = this.Size.Height;
+
+            // Start the cursor color transitions.
+            //tColorTransition.Start();
         }
+
+        /// <summary>
+        /// Method to parse a command containing the varibles.
+        /// </summary>
+        /// <param name="command">The variable command.</param>
+        /// <returns>Return true if the variable command was valid and executed, Otherwise false.</returns>
+        /// <exception cref="Exception">Throw the exception if the the variable is divided by 0.</exception>
+        private bool getVariable(string command)
+        {
+            // First split the variable name and the value or expression.
+            string[] commandArgs = command.Split('=');
+
+            if (commandArgs.Length == 2)
+            {
+                string variableName = commandArgs[0].Trim();
+                string variableValue = commandArgs[1].Trim();
+
+                // If the variable is already present in the list of variables.
+                if (variables.Any(x => x.Item1.Equals(variableName)))
+                {
+                    // If the value expression is of sum.
+                    if (variableValue.Contains("+"))
+                    {
+                        string[] variableValueArgs = variableValue.Split('+');
+                        if (variableValueArgs.Length == 2)
+                        {
+                            string variableValue1 = variableValueArgs[0].Trim();
+                            string variableValue2 = variableValueArgs[1].Trim();
+
+                            // Sum the values of the values and save it. Then return true.
+                            variables[variables.FindIndex(x => x.Item1.Equals(variableName))] = new Tuple<string, int>(variableName, GetVariableValue(variableValue1) + GetVariableValue(variableValue2));
+                            return true;
+                        }
+                    }
+                    // If the variable is of substraction.
+                    else if (variableValue.Contains("-"))
+                    {
+                        string[] variableValueArgs = variableValue.Split('-');
+                        if (variableValueArgs.Length == 2)
+                        {
+                            string variableValue1 = variableValueArgs[0].Trim();
+                            string variableValue2 = variableValueArgs[1].Trim();
+
+                            // Subtract the values of the values and save it. Then return true.
+                            variables[variables.FindIndex(x => x.Item1.Equals(variableName))] = new Tuple<string, int>(variableName, GetVariableValue(variableValue1) - GetVariableValue(variableValue2));
+                            return true;
+                        }
+                    }
+                    // If the variable is of multiplication.
+                    else if (variableValue.Contains("*"))
+                    {
+                        string[] variableValueArgs = variableValue.Split('*');
+                        if (variableValueArgs.Length == 2)
+                        {
+                            string variableValue1 = variableValueArgs[0].Trim();
+                            string variableValue2 = variableValueArgs[1].Trim();
+
+                            // Multiply the values of the values and save it. Then return true.
+                            variables[variables.FindIndex(x => x.Item1.Equals(variableName))] = new Tuple<string, int>(variableName, GetVariableValue(variableValue1) * GetVariableValue(variableValue2));
+                            return true;
+                        }
+                    }
+                    // If the variable is of division.
+                    else if (variableValue.Contains("/"))
+                    {
+                        string[] variableValueArgs = variableValue.Split('/');
+                        if (variableValueArgs.Length == 2)
+                        {
+                            string variableValue1 = variableValueArgs[0].Trim();
+                            string variableValue2 = variableValueArgs[1].Trim();
+
+                            if (GetVariableValue(variableValue2) == 0)
+                            {
+                                // Throw an exception if the variable is divided by 0.
+                                throw new Exception("Cannot divide by zero");
+                            }
+                            else
+                            {
+                                // Divide the values of the values and save it. Then return true.
+                                variables[variables.FindIndex(x => x.Item1.Equals(variableName))] = new Tuple<string, int>(variableName, GetVariableValue(variableValue1) / GetVariableValue(variableValue2));
+                                return true;
+                            }
+                        }
+                    }
+                    // If the variable is of modulo.
+                    else
+                    {
+                        // Save the value of the variable. Then return true.
+                        variables[variables.FindIndex(x => x.Item1.Equals(variableName))] = new Tuple<string, int>(variableName, GetVariableValue(variableValue));
+                        return true;
+                    }
+                }
+                else
+                {
+                    int value = 0;
+                    if (int.TryParse(variableValue, out value))
+                    {
+                        // If the variable is not present in the list of variables, add it to the list. Then return true.
+                        variables.Add(new Tuple<string, int>(variableName, value));
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
 
         /// <summary>
         /// The method to execute the single command from the progrom or command line.
