@@ -649,8 +649,60 @@ namespace aseassignment
                     // Execute the command and if it returns false throw an exception.
                     if (!await execute(commands[i], isResize, canvas: canvas)) throw new Exception("Sytnex error");
 
-                    await Task.Delay(2000);
+                     await Task.Delay(2000);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Called when run button is pressed. It will run the program.
+        /// </summary>
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private async void btnRun_Click(object sender, EventArgs e)
+        {
+            lbStatus.Text = "";
+            // Check if the program is syntecally correct
+            if (await IsValidProgram(rtbInput.Text))
+            {
+                // Run the program. It will run all the commands in the text box.
+                await executerun(rtbInput.Text);
+            }
+            else
+            {
+                // Show that the commands are syntecally incorrect.
+                lbStatus.Text = errorString;
+                lbStatus.ForeColor = Color.Red;
+                errorString = "";
+            }
+        }
+
+
+        /// <summary>
+        /// Called when the "enter" key is pressed while typing in command line. It will run the command.
+        /// </summary>
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private async void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if the "enter" key is pressed.
+            if (e.KeyCode == Keys.Enter)
+            {
+                CommandsExecuted = rtbInput.Text;
+                try
+                {
+                    // If the command executes successfully then empty the commandline.
+                    if (await execute(textBox1.Text)) textBox1.Text = "";
+                }
+                catch (Exception)
+                { }
+
+                // The event was handled. So, set the Handled property to true.
+                e.Handled = true;
+                CommandsExecuted = "";
+
+                // Do not send the key to the control.
+                e.SuppressKeyPress = true;
             }
         }
 
@@ -665,43 +717,27 @@ namespace aseassignment
             Application.Exit();
         }
 
-      
 
         /// <summary>
-        /// This method will execute the program line by line. It will execute the commands in the richTextBox.
-        /// It will ignore the empty lines. It will not start if the program is syntecally incorrect.
+        /// Called when syntex check button is clicked. It will check the program whether is syntecally correct or not.
         /// </summary>
-        /// <param name="input">The multi-command Strind seperated by newline character</param>
-        private void executerun(String input)
+        /// <param name="sender">The object that is the sender of this event</param>
+        /// <param name="e">The arguments passed on this event</param>
+        private async void btnSyntax_Click(object sender, EventArgs e)
         {
-            try
+            // Check if the program is syntecally correct
+            if (await IsValidProgram(rtbInput.Text))
             {
-                // Check if the input program is syntecally correct.
-                if (Parser.isValidSyntex(input))
-                {
-                    // Split the input program into line commands.
-                    String[] commands = input.Split('\n');
-
-                    // Loop through all the commands.
-                    foreach (String command in commands)
-                    {
-                        // skip if the line is empty
-                        if (command.Equals("")) continue;
-
-                        // normally execute the command
-                        execute(command);
-                    }
-                }
-                else
-                {
-                    // Display the error message if the program is not syntecally correct.
-                    MessageBox.Show("Invalid program, please try again", "Syntex Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                // Show that the commands are syntecally correct
+                lbStatus.Text = "Syntex OK";
+                lbStatus.ForeColor = Color.Green;
             }
-            catch (Exception)
+            else
             {
-                // Display the error message if a exception is thrown.
-                MessageBox.Show("Invalid program, please try again", "Syntex Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Show that the commands are syntecally incorrect.
+                lbStatus.Text = errorString;
+                lbStatus.ForeColor = Color.Red;
+                errorString = "";
             }
         }
 
