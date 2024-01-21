@@ -234,6 +234,64 @@ namespace aseassignment
         }
 
         /// <summary>
+        /// This function will check if the command is a variable declaration. Check the condition and return the appropriate boolean value.
+        /// </summary>
+        /// <param name="conditional">The type of conditional statement.</param>
+        /// <param name="conditionalStatement">The full cobntional statement with the condition.</param>
+        /// <returns></returns>
+        private bool CheckCondition(string conditional, string conditionalStatement)
+        {
+            // get the condition of the loop or if statement
+            //conditionalStatement.IndexOf(conditional): This part finds the index of the first occurrence of the conditional substring within the conditionalStatement.
+            //It returns the starting index of the conditional substring.
+            //+ conditional.Length: This part adds the length of the conditional substring to the index .
+            //It effectively moves the starting position to the end of the conditional substring within the conditionalStatement.
+            string condition = conditionalStatement.Substring(conditionalStatement.IndexOf(conditional) + conditional.Length).Trim();
+
+            // get the left and right operands
+            //The StringSplitOptions.None parameter is used to include empty substrings in the result array if there are consecutive delimiters.
+            //For example, if there are two consecutive relational operators in the condition, it ensures that an empty string is included between them in the resulting array.
+            string[] operands = condition.Split(new string[] { "==", "<=", ">=", "<", ">" }, StringSplitOptions.None);
+
+            // get the left and right values
+            string left = operands[0].Trim();
+            string right = operands[1].Trim();
+
+            // get the left and right values
+            int leftValue = GetVariableValue(left);
+            int rightValue = GetVariableValue(right);
+
+            // return the result of the condition
+            if (condition.Contains("=="))
+            {
+                return leftValue == rightValue;
+            }
+            else if (condition.Contains("<="))
+            {
+                return leftValue <= rightValue;
+            }
+            else if (condition.Contains(">="))
+            {
+                return leftValue >= rightValue;
+            }
+            else if (condition.Contains("<"))
+            {
+                return leftValue < rightValue;
+            }
+            else if (condition.Contains(">"))
+            {
+                return leftValue > rightValue;
+            }
+
+            // return false if the condition is not recognized
+            return false;
+        }
+
+
+
+
+
+        /// <summary>
         /// Called when the exit button is pressed. It will exit the application.
         /// </summary>
         /// <param name="sender">The object that is the sender of this event</param>
