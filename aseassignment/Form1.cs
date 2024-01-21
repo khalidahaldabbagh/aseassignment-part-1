@@ -311,7 +311,29 @@ namespace aseassignment
             return endloopIndex;
         }
 
+        /// <summary>
+        /// Get the index where the if statement ends.
+        /// </summary>
+        /// <param name="i">Starting index of the if statement.</param>
+        /// <param name="commands">The commands array.</param>
+        /// <returns>The index where the if statement ends.</returns>
+        private int GetEndIfIndex(int i, string[] commands)
+        {
+            int endIfIndex = -1;
+            for (int j = i; j < commands.Length; j++)
+            {
+                // check if the command is endif
+                if (commands[j].Trim().Equals("endif"))
+                {
+                    // Endif index is found
+                    endIfIndex = j;
+                    break;
+                }
+            }
 
+            // return the endif index
+            return endIfIndex;
+        }
 
 
         /// <summary>
