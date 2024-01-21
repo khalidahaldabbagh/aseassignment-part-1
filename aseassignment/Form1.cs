@@ -50,6 +50,11 @@ namespace aseassignment
         // The index at which the loop starts.
         private int loopStart = 0;
 
+
+        // This will store the error string
+        public string errorString = "";
+
+
         // Static instance of the Form1 class to be used in other classes.
         //This line declares a private static variable named instance of type Form1.
         //The static keyword means that this variable is shared among all instances of the class, and it's initially set to null (the ? indicates that it can be nullable).
@@ -741,6 +746,117 @@ namespace aseassignment
             }
         }
 
+       
+        /// <summary>
+        /// This method will check if the program is syntecally correct.
+        /// </summary>
+        /// <param name="input">Input command program.</param>
+        /// <returns>Return true if the program </returns>
+        public Task<bool> IsValidProgram(string input)
+        {
+            variables.Clear();
+            int codeLinesIndex = 0;
+            loopStart = 0;
+
+            try
+            {
+                // Split the input program into line commands.
+                // As the commands are case insensitive, we convert the input string to lowercase.
+                string[] commands = input.ToLower().Split('\n');
+
+                // Loop through all the commands.
+                for (int i = 0; i < commands.Length; i++)
+                {
+                    codeLinesIndex = i;
+
+                    // skip if the line is empty
+                    if (string.IsNullOrWhiteSpace(commands[i]) || string.IsNullOrEmpty(commands[i])) continue;
+
+                    Parser parser = new Parser(commands[i]);
+
+                    // Check if the command is a loop
+                    if (parser.getCommandType().Equals("while"))
+                    {
+                        // If the loop condition is false, skip the loop
+                        int endLoopIndex = GetEndloopIndex(i, commands);
+                        if (endLoopIndex == -1)
+                        {
+                            codeLinesIndex = commands.Length - 1;
+                            throw new Exception("EndLoop tag not found");
+                        }
+
+                        // If the loop condition is true
+                        if (CheckCondition("while", commands[i]))
+                        {
+                            loopStart = i;
+                        }
+                        else
+                        {
+                            i = endLoopIndex;
+                        }
+                    }
+                    // Check if the command is an if statement.
+                    else if (parser.getCommandType().Equals("if"))
+                    {
+                        int endIfIndex = GetEndIfIndex(i, commands);
+                        if (endIfIndex == -1)
+                        {
+                            codeLinesIndex = commands.Length - 1;
+                            throw new Exception("EndIf tag not found");
+                        }
+
+                        // If the if condition is false, skip the if statement
+                        if (!CheckCondition("if", commands[i]))
+                        {
+                            i = endIfIndex;
+                        }
+                    }
+                    // Check if the command is an endloop statement.
+                    else if (parser.getCommandType().Equals("endloop"))
+                    {
+                        // If the endloop is not written correct throw an exception
+                        if (!commands[i].Trim().Equals("endloop"))
+                        {
+                            throw new Exception("Sytnex error");
+                        }
+
+                        // Now the loop is ended, so set the loop index to start loop
+                        i = loopStart - 1;
+                    }
+                    // Check if the command is an endif statement.
+                    else if (parser.getCommandType().Equals("endif"))
+                    {
+                        // If the endif is not written correct throw an exception.
+                        if (!commands[i].Trim().Equals("endif"))
+                        {
+                            throw new Exception("Sytnex error");
+                        }
+                    }
+                    // Otherwise execute the command.
+                    else
+                    {
+                        if (!Parser.isValidSyntex(commands[i]))
+                        {
+                            // If the command is not valid, throw an exception.
+                            if (getVariable(commands[i]) == false)
+                            {
+                                // Display the error message if the command is not recognized.
+                                throw new Exception("Sytnex error");
+                            }
+                        }
+                    }
+                }
+                //used in asynchronous programming to represent an operation that is already completed.
+                return Task.FromResult(true);
+            }
+            catch (Exception ex)
+            {
+                // store the error message if a exception is thrown.
+                errorString = "Line " + (codeLinesIndex + 1) + ", " + ex.Message + ".";
+                return Task.FromResult(false);
+            }
+        }
+
         /// <summary>
         /// Called when the form is done resizing. It is used to resize and fit the canvas (picturebox).
         /// It is also used to redraw the canvas with the commands that are given before the canvas size changed.
@@ -758,6 +874,8 @@ namespace aseassignment
             // Redraw the canvas with the commands that are given before the canvas size changed.
             executerun(CommandsExecuted);
         }
+
+
 
         /// <summary>
         /// Called when the form is maximized. It is used to resize and fit the canvas (picturebox).
