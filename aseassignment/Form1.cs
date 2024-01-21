@@ -10,6 +10,7 @@ using System.Collections;
 using static System.Windows.Forms.LinkLabel;
 using System.Security.Cryptography;
 using System.IO;
+using System.Net.NetworkInformation;
 
 namespace aseassignment
 {
@@ -23,12 +24,12 @@ namespace aseassignment
     {
         //The canvas object. It will be used to draw the shapes on the the object it's been passed.Here we will be using the canvas object to draw the shapes on a picturebox.
         // This line declares a private instance variable of type Canvas named _thisCanvas. The private keyword indicates that this variable can only be accessed within the class it is declared in.
-        
+
         private Canvas _thisCanvas;
-        
+
         // This line declares a public instance variable of type Canvas named Canvas.
         // The public keyword indicates that this variable can be accessed from outside the class.
-        
+
         public Canvas Canvas;
 
 
@@ -43,7 +44,7 @@ namespace aseassignment
         //  It's a list that will store tuples, where each tuple contains a string and an integer.
         //(= new List<Tuple<string, int>>();) : This initializes the list by creating a new instance of List<Tuple<string, int>>.
         //This means that when an object of the class is created, variables will be an empty list ready to store tuples.
-        
+
         private List<Tuple<string, int>> variables = new List<Tuple<string, int>>();
 
         // The index at which the loop starts.
@@ -52,7 +53,7 @@ namespace aseassignment
         // Static instance of the Form1 class to be used in other classes.
         //This line declares a private static variable named instance of type Form1.
         //The static keyword means that this variable is shared among all instances of the class, and it's initially set to null (the ? indicates that it can be nullable).
-       
+
         private static Form1? instance;
 
         //This public static property serves as a getter for the singleton instance of the Form1 class. 
@@ -63,7 +64,7 @@ namespace aseassignment
         {
             //The getter block (get) checks whether the instance variable is null.
             //If it is, a new instance of Form1 is created and assigned to instance. Subsequent calls to Instance will return the existing instance.
-           
+
             get
             {
                 // If there is no instance of the Form1 class, create one.
@@ -93,8 +94,6 @@ namespace aseassignment
             formWidth = this.Size.Width;
             formHeight = this.Size.Height;
 
-            // Start the cursor color transitions.
-            //tColorTransition.Start();
         }
 
         /// <summary>
@@ -180,7 +179,7 @@ namespace aseassignment
                             }
                         }
                     }
-                    // If the variable is of modulo.
+                    // If the variable is of module.
                     else
                     {
                         // Save the value of the variable. Then return true.
@@ -204,204 +203,34 @@ namespace aseassignment
 
 
         /// <summary>
-        /// The method to execute the single command from the progrom or command line.
-        /// It will take the command and validate it.
-        /// If it is valid, It will parse parameters from the command and use the canvas object to draw the shape.
+        /// This function will return the variable value if exits otherwise converts the value into integer and returns it.
         /// </summary>
-        /// <param name="command">The String of commands to be executed</param>
-        private bool execute(String command)
+        /// <param name="value">The variable values.</param>
+        /// <returns>The integer value of the variable.</returns>
+        /// <exception cref="Exception"></exception>
+        public int GetVariableValue(string value)
         {
-            // As the commands are case insensitive, we convert the input string to lowercase.
-            command = command.ToLower();
+            // check if the value is a variable
+            string variableName = value;
 
-            // Check if the command is valid. If it is not valid, it will return false.
-            if (Parser.isValidSyntex(command))
+            if (variables.Any(x => x.Item1 == variableName))
             {
-                try
-                {
-                    Parser Parser = new Parser(command);
-
-                    // Check if the given command is "run". 
-                    if (command.Equals("run"))
-                    {
-                        /* If the command is "run".
-                         * Get the commands from the richTextBox. It will be used to execute the program.
-                         */
-                        executerun(rtbInput.Text);
-                    }
-                    // Check if the command is "clear". 
-                    else if (command.Equals("clear"))
-                    {
-                        /* If the command is "clear".
-                         * Clear the canvas (picturebox).
-                         */
-                        Canvas.Clear();
-                    }
-                    // Check if the command is "reset".
-                    else if (command.Equals("reset"))
-                    {
-                        // just move the pointer to the starting of the canvas.
-                        Canvas.MoveTo(0, 0);
-                    }
-                    // Check if the command is "moveto".
-                    else if (Parser.getCommandType().Equals("moveto"))
-                    {
-                        /* If the command is "moveto".
-                         * Get the x and y coordinates from the parser object.
-                         * Using canvas object, move the pointer to the given coordinates.
-                         */
-                        int x = Convert.ToInt32(Parser.parameters[0]);
-                        int y = Convert.ToInt32(Parser.parameters[1]);
-                        Canvas.MoveTo(x, y);
-                    }
-                    // Check if the command is "drawto".
-                    else if (Parser.getCommandType().Equals("drawto"))
-                    {
-                        /* If the command is "drawto".
-                         * Get the x and y coordinates from the parser object.
-                         * Using canvas object, draw a line from the pointer to the given coordinates.
-                         */
-                        int x = Convert.ToInt32(Parser.parameters[0]);
-                        int y = Convert.ToInt32(Parser.parameters[1]);
-
-                        // Check whether the "pen" argumant was also passed to change the color of the line.
-                        if (Parser.getCommandArgsLength() == 2)
-                        {
-                            // Draw line without color.
-                            Canvas.DrawTo(x, y);
-                        }
-                        else
-                        {
-                            // Draw line with color.
-                            Canvas.DrawTo(x, y, Parser.parameters[2]);
-                        }
-                    }
-                    // Check if the command is "circle". It will draw a circle with pointer as center.
-                    else if (Parser.getCommandType().Equals("circle"))
-                    {
-                        /* If the command is "circle".
-                         * Get the radius from the parser object.
-                         * Using canvas object, draw a circle with pointer as center and given radius.
-                         */
-                        int radius = Convert.ToInt32(Parser.parameters[0]);
-
-                        // Check if only the radius was passed.
-                        if (Parser.getCommandArgsLength() == 2)
-                        {
-                            // Draw circle with default color.
-                            Canvas.DrawCircle(radius);
-                        }
-                        // Check if the "pen" argumant was also passed.
-                        else if (Parser.getCommandArgsLength() == 4)
-                        {
-                            // Draw outlined circle with given color.
-                            Canvas.DrawCircle(radius, Parser.parameters[2]);
-                        }
-                        // Check if the "fill" argumant was also passed.
-                        else if (Parser.getCommandArgsLength() == 6)
-                        {
-                            // Draw filled circle with given color.
-                            Canvas.DrawCircle(radius, Parser.parameters[2], Parser.parameters[3]);
-                        }
-                    }
-                    // Check if the command is "triangle".
-                    else if (Parser.getCommandType().Equals("triangle"))
-                    {
-                        /* If the command is "triangle".
-                         * Get the size from the parser object.
-                         * Using canvas object, draw a triangle with pointer as center and given size.
-                         */
-                        int size = Convert.ToInt32(Parser.parameters[0]);
-
-                        // Check if only the size was passed.
-                        if (Parser.getCommandArgsLength() == 2)
-                        {
-                            // Draw triangle with default color.
-                            Canvas.DrawTriangle(size);
-                        }
-                        // Check if the "pen" argumant was also passed.
-                        else if (Parser.getCommandArgsLength() == 4)
-                        {
-                            // Draw outlined triangle with given color.
-                            Canvas.DrawTriangle(size, Parser.parameters[2]);
-                        }
-                        // Check if the "fill" argumant was also passed.
-                        else if (Parser.getCommandArgsLength() == 6)
-                        {
-                            // Draw filled triangle with given color.
-                            Canvas.DrawTriangle(size, Parser.parameters[2], Parser.parameters[3]);
-                        }
-                    }
-                    // Check if the command is "rectangle". It will draw a rectangle with pointer as center.
-                    else if (Parser.getCommandType().Equals("rectangle"))
-                    {
-                        /* If the command is "rectangle".
-                         * Get the width and height from the parser object.
-                         * Using canvas object, draw a rectangle with pointer as center and given width and height.
-                         */
-                        int width = Convert.ToInt32(Parser.parameters[0]);
-                        int height = Convert.ToInt32(Parser.parameters[1]);
-
-                        // Check if only the width and height were passed.
-                        if (Parser.getCommandArgsLength() == 2)
-                        {
-                            // Draw rectangle with default color.
-                            Canvas.DrawRectangle(width, height);
-                        }
-                        // Check if the "pen" argumant was also passed.
-                        else if (Parser.getCommandArgsLength() == 4)
-                        {
-                            // Draw outlined rectangle with given color.
-                            Canvas.DrawRectangle(width, height, Parser.parameters[2]);
-                        }
-                        // Check if the "fill" argumant was also passed.
-                        else if (Parser.getCommandArgsLength() == 6)
-                        {
-                            // Draw filled rectangle with given color.
-                            Canvas.DrawRectangle(width, height, Parser.parameters[2], Parser.parameters[3]);
-                        }
-                    }
-                    else
-                    {
-                        // Display the error message if the command is not recognized.
-                        MessageBox.Show("Invalid command, please try again", "Syntex Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
-                }
-                catch (Exception)
-                {
-                    // Display the error message if a exception is thrown.
-                    MessageBox.Show("Invalid command, please try again", "Syntex Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-
-                // Check if the command is not of any sigle argument command types.
-                if (!(command.Equals("clear") || command.Equals("reset") || command.Equals("run")))
-                {
-                    // Add the commands in the commandsGiven variable to provide input when the canvas size changes and it is redrawn.
-                    CommandsExecuted += command + "\n";
-                }
-                else
-                {
-                    // Check if the command is not "run".
-                    if (!command.Equals("run"))
-                        /* commandsGiven is used to store the commands that are used when the canvas (picturebox) size changes and it is redrawn.
-                         * If it is not "run", then the commandsGiven variable is cleared to avoid the commands being repeated when the canvas is redrawn.
-                         */
-                        CommandsExecuted = ""; // Clear the commandsGiven variable.
-                }
-
-                // The most important line. It will call the paint function of the picturebox to re-paint the changes in the picturebox
-                pbOutput.Invalidate();
-
+                // get the value of the variable
+                return variables.First(x => x.Item1 == variableName).Item2;
             }
             else
             {
-                // Display the error message if there is an syntex error in the command.
-                MessageBox.Show("Invalid command, please try again", "Syntex Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                // return the value of the variable
+                if (int.TryParse(value, out int valueInt))
+                {
+                    return valueInt;
+                }
+                else
+                {
+                    // throw an exception if the value is not a variable or integer
+                    throw new Exception("Invalid variable name");
+                }
             }
-            return true;
         }
 
         /// <summary>

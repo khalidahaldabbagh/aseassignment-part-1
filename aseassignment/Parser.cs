@@ -19,7 +19,7 @@ namespace aseassignment
         /// constructor for the parser class.
         /// It takes the input string as a parameter and assigns it to input attribute after lowercasing it.
         /// </summary>
-
+        /// <param name="commands">The String of commands to be parsed</param>
         public Parser(String commands)
         {
             // As the commands are case insensitive, we convert the input string to lowercase.
@@ -46,20 +46,19 @@ namespace aseassignment
         }
 
         /// <summary>
-        /// This method gets all the command arguments and values. 
-        /// For example, if the command is "rectangle 50,100" then the argument is rectangle and parameters are 50 and 100.
+        /// This method gets all the command arguments and values. The command arguments are the words in the command seperated by comma.
+        /// For example, if the command is "rectangle 10,20" then the argument is rectangle and parameters are 10 and 20.
         /// </summary>
         /// <returns>It return the array of arguments after spliting the command on space(' ')</returns>
         public String[] getCommandArgs()
         {
-            // This means that each word in the input string will become an element in the resulting array.
             String[] commandArgs = input.Split(' ');
             return commandArgs;
         }
 
         /// <summary>
         /// This method will get the parameters depending on the number of command arguments. Parameters are the values of the arguments.
-        /// For example, if the command is "rectangle 20,40" then the parameters are 20 and 40.
+        /// For example, if the command is "rectangle 10,20" then the parameters are 10 and 20.
         /// </summary>
         public List<String> parameters
         {
@@ -72,7 +71,7 @@ namespace aseassignment
                 // First argument is the command type and its parameters are cordinates which are seperated by comma.
                 String[] values = commands[1].Trim().Split(',');
 
-                // The list of parameters to be returned.  Initializes a new list named parameters to store the extracted values.
+                // The list of parameters to be returned.
                 List<String> parameters = new List<string>();
 
                 // Get all the cordinates and add them to the list of parameters.
@@ -103,6 +102,7 @@ namespace aseassignment
         /// <summary>
         /// Method to validate the command. It checks if the command is valid or not.
         /// </summary>
+        /// <param name="input">The String of commands to be validated</param>
         /// <returns>Return true of the command is valid otherwise false</returns>
         public static bool isValidSyntex(String input)
         {
@@ -166,7 +166,7 @@ namespace aseassignment
                                 if (parts[2].Equals("pen") && !parts[0].Equals("moveto"))
                                 {
                                     // Check if the pen argument parameter is valid.
-                                    if (parts[3].Equals("black") || parts[3].Equals("red") || parts[3].Equals("green")) 
+                                    if (parts[3].Equals("black") || parts[3].Equals("red") || parts[3].Equals("green"))
                                     { }
                                     else { return false; }
                                 }
@@ -177,7 +177,7 @@ namespace aseassignment
                             if (parts.Length > 4)
                             {
                                 // Check if the argument is valid and moveto and drawto commands are not given as moveto and drawto commands do not have fill argument.
-                                if (parts[4].Equals("fill") && !parts[0].Equals("moveto") && !parts[0].Equals("drawto")) 
+                                if (parts[4].Equals("fill") && !parts[0].Equals("moveto") && !parts[0].Equals("drawto"))
                                 {
                                     // Check if the fill argument parameter is valid.
                                     if (parts[5].Equals("none") || parts[5].Equals("on"))
@@ -199,6 +199,6 @@ namespace aseassignment
         }
     }
 }
-    
+
 
 

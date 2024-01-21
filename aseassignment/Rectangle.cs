@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Drawing;
 
 namespace aseassignment
-{/// <summary>
- /// The rectangle class. It inherits from the shape class. It draws the rectangle on the canvas.
- /// </summary>
+{
+    /// <summary>
+    /// The rectangle class. It inherits from the shape class. It draws the rectangle on the canvas.
+    /// </summary>
     class Rectangle : Shape
     {
         // The width of the rectangle.

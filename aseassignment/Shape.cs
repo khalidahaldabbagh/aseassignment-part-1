@@ -26,8 +26,7 @@ namespace aseassignment
         public Shape(Color color, int x, int y)
         {
             this.color = color;
-            this.x = x;
-            this.y = y;
+            this.x = x; this.y = y;
         }
 
         /// <summary>
@@ -44,5 +43,6 @@ namespace aseassignment
         {
             return base.ToString() + "    " + this.x + "," + this.y + ":";
         }
+
     }
 }
