@@ -287,6 +287,29 @@ namespace aseassignment
             return false;
         }
 
+        /// <summary>
+        /// Get the index where the loop statement ends. 
+        /// </summary>
+        /// <param name="i">Starting index of the loop statement.</param>
+        /// <param name="commands">The commands array.</param>
+        /// <returns>The index where the loop ends.</returns>
+        private int GetEndloopIndex(int i, string[] commands)
+        {
+            int endloopIndex = -1;
+            for (int j = i; j < commands.Length; j++)
+            {
+                // check if the command is endloop
+                if (commands[j].Trim().Equals("endloop"))
+                {
+                    // Endloop index is found
+                    endloopIndex = j;
+                    break;
+                }
+            }
+
+            // return the endloop index
+            return endloopIndex;
+        }
 
 
 
