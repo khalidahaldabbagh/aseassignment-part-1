@@ -99,6 +99,9 @@ namespace aseassignment
             formWidth = this.Size.Width;
             formHeight = this.Size.Height;
 
+            // Start the cursor color transitions.
+            tColorTransition.Start();
+
         }
 
         /// <summary>
@@ -1076,6 +1079,14 @@ namespace aseassignment
             }
             // Free the dialog box resources.
             openFileDialog.Dispose();
+        }
+
+        private void tColorTransition_Tick(object sender, EventArgs e)
+        {
+            // Transition the cursor color
+            Canvas.DrawCursor();
+            // Update the canvas
+            pbOutput.Invalidate();
         }
 
     }

@@ -7,10 +7,11 @@ using System.Windows.Forms;
 
 namespace aseassignment
 {
+
     /// <summary>
     /// It is the canvas class. 
     /// It consists of a Graphics object which is used to draw the shapes on the canvas.
-    /// It also has a bitmap which is used to manipulate the pixels of the canvas.
+    /// Is also has a bitmap which as the name suggests is used to manipulate the pixels of the canvas.
     /// Note: The canvas mentioned here is the picturebox on which the shapes are drawn.
     /// It has basic methods like moveto (to move on the canvas),
     /// drawto (to draw a line on the canvas), clear (to clear the canvas), etc.
@@ -23,7 +24,6 @@ namespace aseassignment
 
         // x and y corrdinates of the cursor on the canvas.
         // The cursor shows your location on the canvas and from where you can start drawing.
-        // It is used to store the original pixels where the cursor is drawn.
         public int xPos, yPos;
 
         // The 2 dimensional array that contains the pixels of the cursor on the canvas.
@@ -32,7 +32,10 @@ namespace aseassignment
 
         // It is the bitmap that is used to manipulate the pixels of the canvas.
         // It contains all the pixels of the canvas in the form of a 2 dimensional array of colors.
-        Bitmap bitmap;
+        static Bitmap bitmap;
+
+        // This flag is used to transition the color of the cursor.
+        private bool flag = true;
 
         /// <summary>
         /// Constructor for the canvas class.
@@ -46,7 +49,10 @@ namespace aseassignment
             xPos = yPos = 0;
 
             // Make an object of 2 dimensional pixel array, size same as of picturebox. Store it in bitmap.
-            bitmap = new Bitmap(pictureBox.Size.Width, pictureBox.Size.Height);
+            if (bitmap == null)
+            {
+                bitmap = new Bitmap(pictureBox.Size.Width, pictureBox.Size.Height);
+            }
 
             // Set the 2 dimensional pixel array of the bitmap to the 2 dimensional pixel array of the picturebox.
             // Image is also like a 2 dimensional array of pixels.
@@ -55,12 +61,11 @@ namespace aseassignment
 
             // Get the graphics object of the picturebox.
             // Now the graphics object can be used to draw the shapes on the canvas (picturebox).
-            // Initializes the graphics object from the bitmap, allowing drawing on the canvas.
             this.g = Graphics.FromImage(bitmap);
 
-            // Initialize the curor 2 dimensional array.
-            //Initializes the cursor array with a size of 10x10. This is the area around the cursor that is saved for later restoration.
-            cursor = new Color[10, 10];
+            // Initialize th curor 2 dimensional array. You can make the cursor of your own size preference.
+            // but make sure you also change the support methods (RemoveCursor, DrawCursor and SaveStateBeforeCursor) accordingly.
+            cursor = new Color[3, 3];
 
             // This method is used to store the pixels where the cursor will be drawn on.
             SaveStateBeforeCursor();
@@ -71,23 +76,22 @@ namespace aseassignment
 
         /// <summary>
         /// Method to remove the cursor pixels and restore that point's state where the cursor was on.
-        /// It will use the cursor 2 dimensional array to restore the pixels which are stored before moving the cursor to a location.
+        /// It will use the cursor 2 dimensional array to restore the pixels which are stored before moving the cursor tha location.
         /// </summary>
         private void RemoveCursor()
         {
-            // x and y cordinate of the cursor image, to remove the cursor as a rectangle of 10x10 pixels around the current location pointer we subtract 1 from the both xPos and yPos. 
-            //It subtracts 1 from both xPos and yPos to ensure that the cursor removal area extends one pixel beyond the current cursor position.
+            // x and y cordinate of the cursor image, to remove the cursor as a rectangle of 3x3 pixels
+            // around the current location pointer we subtract 1 from the both xPos and yPos. 
             int x = xPos - 1, y = yPos - 1;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 3; j++)
                 {
-                    //This line sets the pixel at the current position (x + i, y + j) on the bitmap (canvas) to the color value stored in the corresponding position (i, j) of the cursor array.
-                    //This effectively restores the original color of the canvas in the region where the cursor was previously drawn.
-                    // The code is wrapped in a try-catch block to handle any potential exceptions that might occur if the cursor removal area extends beyond the canvas boundaries.
-                    // The try block attempts to set the pixel color, and if an exception occurs (for example, if the pixel is outside the canvas), it is caught and ignored (catch (Exception) { })
-                   
+                    // Set the pixel at (x,y) cordinates to the color stored in the cursor,
+                    // 2 dimensional array to restore the canvas without pointer.
+                    // In some cases like the when starting, the pixel may not be in range So,
+                    // it's written in try catch to catch any unecessory exception.
                     try { bitmap.SetPixel(x + i, y + j, cursor[i, j]); } catch (Exception) { }
                 }
             }
@@ -95,25 +99,57 @@ namespace aseassignment
 
         /// <summary>
         /// Method to draw the cursor on the current location.
-        /// It will use the bitmap to draw the cursor in 10x10 rectangle around the current location.
+        /// It will use the bitmap to draw the cursor in 3x3 rectangle around the current location.
         /// </summary>
-        private void DrawCursor()
+        public void DrawCursor()
         {
-            // x and y cordinate of the cursor image, to draw the cursor as a rectangle of 10x10 pixels around the current location pointer we subtract 1 from the both xPos and yPos. 
+            // x and y cordinate of the cursor image, to draw the cursor as a rectangle of 3x3 pixels
+            // around the current location pointer we subtract 1 from the both xPos and yPos. 
             int x = xPos - 1, y = yPos - 1;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     // Leave the center of the cursor as it is.
                     if (i == 1 && j == 1) continue;
-                    //  This line sets the pixel at the current position (x + i, y + j) on the bitmap (canvas) to the color red,
-                    //  creating the red-colored rectangle that represents the cursor.
-                    try { bitmap.SetPixel(x + i, y + j, Color.Red); } catch (Exception) { }
+
+                    // Set the pixel at (x,y) cordinates to the color Red, Blue or Black if the flag is true. Green, Yellow or White if the flag is false.
+                    if (flag)
+                    {
+                        // set the first vertical bit line of the cursor to red.
+                        if (i == 0)
+                            try { bitmap.SetPixel(x + i, y + j, Color.Red); }
+                            catch { }
+                        // set the second vertical bit line of the cursor to blue.
+                        if (i == 1)
+                            try { bitmap.SetPixel(x + i, y + j, Color.Blue); }
+                            catch { }
+                        // set the third vertical bit line of the cursor to black.
+                        if (i == 2)
+                            try { bitmap.SetPixel(x + i, y + j, Color.Black); }
+                            catch { }
+                    }
+                    else
+                    {
+                        // set the first vertical bit line of the cursor to green.
+                        if (i == 0)
+                            try { bitmap.SetPixel(x + i, y + j, Color.Green); }
+                            catch { }
+                        // set the second vertical bit line of the cursor to yellow.
+                        if (i == 1)
+                            try { bitmap.SetPixel(x + i, y + j, Color.Yellow); }
+                            catch { }
+                        // set the third vertical bit line of the cursor to white.
+                        if (i == 2)
+                            try { bitmap.SetPixel(x + i, y + j, Color.White); }
+                            catch { }
+                    }
                 }
             }
 
+            // Now inverse the flag if the flag is true, make it false and vice versa.
+            flag = !flag;
         }
 
         /// <summary>
@@ -122,24 +158,25 @@ namespace aseassignment
         /// </summary>
         private void SaveStateBeforeCursor()
         {
-            // x and y cordinate of the cursor image, to save pixels of the cursor .
-            //  It subtracts 1 from both xPos and yPos to ensure that the cursor drawing area extends one pixel beyond the current cursor position.
+            // x and y cordinate of the cursor image, to save pixels before the cursor as a rectangle of 3x3 pixels
+            // around the current location pointer we subtract 1 from the both xPos and yPos. 
             int x = xPos - 1, y = yPos - 1;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 3; j++)
                 {
-                    // Store the pixel at curent position (x+i,y+j) cordinates in the cursor, 2 dimensional array to restore the canvas without cursor.
-                    //  If an exception occurs (for example, if the pixel is outside the canvas), it is caught, and the cursor array is assigned a default color (Color.DimGray).
+                    // Store the pixel at (x,y) cordinates in the cursor, 2 dimensional array to restore the canvas without cursor.
+                    // In some cases like the when starting, the pixel may not be in range So,
+                    // it's written in try catch to catch any unecessory exception and just assign it default color.
                     try { cursor[i, j] = bitmap.GetPixel(x + i, y + j); } catch (Exception) { cursor[i, j] = Color.DimGray; }
                 }
             }
         }
 
         /// <summary>
-        /// Method to move the cursor from the one location to another.
-        /// It changes the cursor location and Uses the helper functions to remove the cursor from the old location and draw it on the new location without affecting the canvas.
+        /// Method to move the cursor from the one location to another. It changes the cursor location and
+        /// Uses the helper functions to remove the cursor from the old location and draw it on the new location without affecting the canvas.
         /// </summary>
         /// <param name="toX">Destination X cordiante in the canvas</param>
         /// <param name="toY">Destination Y cordiante in the canvas</param>
@@ -328,6 +365,9 @@ namespace aseassignment
             // Clear all the drawing or shapes on the canvas and make all the pixels default dim grey color.
             g.Clear(Color.DimGray);
 
+            // set the initial position of the cursor to (0,0) on canvas
+            xPos = yPos = 0;
+
             // This method is used to store the pixels where the cursor will be drawn on.
             SaveStateBeforeCursor();
 
@@ -335,18 +375,13 @@ namespace aseassignment
             MoveTo(xPos, yPos);
         }
 
+
         /// <summary>
         /// Destructor for the canvas class
-        ///  destructor is a special method that is automatically called when an object is about to be destroyed (i.e., when it goes out of scope or when the Dispose method is called explicitly).
-        ///  The purpose of the destructor is to perform cleanup operations, such as releasing resources, closing files, or deallocating memory.
         /// </summary>
         ~Canvas()
         {
-            // The purpose of calling Dispose in the destructor is to ensure that resources are properly released when an instance of the Canvas class is no longer needed.
-            // This is particularly important for objects that encapsulate or use unmanaged resources,
-            // as failing to release these resources could lead to memory leaks or other issues.
             g.Dispose();
         }
-
     }
 }
