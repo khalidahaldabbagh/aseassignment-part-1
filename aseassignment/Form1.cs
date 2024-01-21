@@ -572,6 +572,87 @@ namespace aseassignment
             return true;
         }
 
+        /// <summary>
+        /// This method will execute the program line by line. It will execute the commands in the richTextBox.
+        /// It will ignore the empty lines. It will not start if the program is syntecally incorrect.
+        /// </summary>
+        /// <param name="input">The multi-command Strind seperated by newline character</param>
+        /// <param name="isResize">The boolean value to check if the canvas size is changed.</param>
+        public async Task executerun(string input, bool isResize = false, Canvas canvas = null)
+        {
+            // Clear the variables list for new program
+            variables.Clear();
+            // Set the loop index to default
+            loopStart = 0;
+
+            // Split the input program into line commands.
+            // As the commands are case insensitive, we convert the input string to lowercase.
+            string[] commands = input.ToLower().Split('\n');
+
+            // Loop through all the commands.
+            for (int i = 0; i < commands.Length; i++)
+            {
+                // skip if the line is empty
+                if (string.IsNullOrWhiteSpace(commands[i]) || string.IsNullOrEmpty(commands[i])) continue;
+
+                // Parse the command to get the command type
+                Parser parser = new Parser(commands[i]);
+
+                // Check if the command is a loop
+                if (parser.getCommandType().Equals("while"))
+                {
+                    // If the loop condition is true
+                    if (CheckCondition("while", commands[i]))
+                    {
+                        loopStart = i;
+                    }
+                    else
+                    {
+                        // If the loop condition is false, skip the loop
+                        int endLoopIndex = GetEndloopIndex(i, commands);
+                        i = endLoopIndex == -1 ? throw new Exception("EndLoop tag not found.") : endLoopIndex;
+                    }
+                }
+                // Check if the command is an if statement.
+                else if (parser.getCommandType().Equals("if"))
+                {
+                    // If the if condition is false, skip the if statement
+                    if (!CheckCondition("if", commands[i]))
+                    {
+                        int endIfIndex = GetEndIfIndex(i, commands);
+                        i = endIfIndex == -1 ? throw new Exception("EndIf tag not found.") : endIfIndex;
+                    }
+                }
+                // Check if the command is an endloop statement.
+                else if (parser.getCommandType().Equals("endloop"))
+                {
+                    // If the endloop is not written correct throw an exception
+                    if (!commands[i].Trim().Equals("endloop"))
+                    {
+                        throw new Exception("Sytnex error");
+                    }
+                    // Now the loop is ended, so set the loop index to start loop
+                    i = loopStart - 1;
+                }
+                // Check if the command is an endif statement.
+                else if (parser.getCommandType().Equals("endif"))
+                {
+                    // If the endif is not written correct throw an exception.
+                    if (!commands[i].Trim().Equals("endif"))
+                    {
+                        throw new Exception("Sytnex error");
+                    }
+                }
+                // Otherwise execute the command.
+                else
+                {
+                    // Execute the command and if it returns false throw an exception.
+                    if (!await execute(commands[i], isResize, canvas: canvas)) throw new Exception("Sytnex error");
+
+                    await Task.Delay(2000);
+                }
+            }
+        }
 
         /// <summary>
         /// Called when the exit button is pressed. It will exit the application.
