@@ -657,7 +657,7 @@ namespace aseassignment
                     // Execute the command and if it returns false throw an exception.
                     if (!await execute(commands[i], isResize, canvas: canvas)) throw new Exception("Sytnex error");
 
-                     await Task.Delay(2000);
+                    await Task.Delay(2000);
                 }
             }
         }
@@ -749,7 +749,7 @@ namespace aseassignment
             }
         }
 
-       
+
         /// <summary>
         /// This method will check if the program is syntecally correct.
         /// </summary>
@@ -1081,6 +1081,10 @@ namespace aseassignment
             openFileDialog.Dispose();
         }
 
+
+        //This program implements a graphical user interface (GUI) feature for color transitions in a cursor.
+        //It utilizes a timer to trigger regular color updates, and the cursor'sappearance is managed through a Canvas class.
+        //The resulting changes are reflected in a PictureBox (pbOutput) within the GUI.
         private void tColorTransition_Tick(object sender, EventArgs e)
         {
             // Transition the cursor color
@@ -1088,6 +1092,28 @@ namespace aseassignment
             // Update the canvas
             pbOutput.Invalidate();
         }
+
+        //This code snippet is an event handler for the TextChanged event of a RichTextBox (rtbInput).
+        //The primary purpose of this event handler is to respond to changes in the text content of the RichTextBox
+        //by clearing any error messages or status labels.
+        private void rtbInput_TextChanged(object sender, EventArgs e)
+        {
+            // If there is an activity in the rich text box. clear the errors.
+            lbFileStatus.Text = "";
+            lbStatus.Text = "";
+        }
+
+        //This code snippet is an event handler for the TextChanged event of a textbox1.
+        //The primary purpose of this event handler is to respond to changes in the text content of the TextBox1
+        //by clearing any error messages or status labels.
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            // If there is an activity in the text box. clear the errors.
+            lbFileStatus.Text = "";
+            lbStatus.Text = "";
+        }
+
+       
 
     }
 }
