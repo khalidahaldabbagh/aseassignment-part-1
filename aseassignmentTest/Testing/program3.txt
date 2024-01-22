@@ -1,0 +1,8 @@
+moveto 180,150
+count = 20
+while count < 100
+IF COUNT > 60
+circle count
+ENDIF
+count = count + 20
+endloop

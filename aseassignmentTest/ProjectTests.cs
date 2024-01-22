@@ -69,5 +69,28 @@ namespace aseassignmentTest
             // Check the result of the validation.
             Assert.That(result, Is.True);
         }
+
+        /// <summary>
+        /// Test valid while loop command from a program.
+        /// </summary>
+        [Test]
+        public void InputFromText_WhileloopProgram_ReturnsTrue()
+        {
+            bool result = false;
+
+            // Load the program2 text.
+            using (StreamReader streamReader = File.OpenText("..\\..\\..\\Testing\\program2.txt"))
+            {
+                // Read the text from the file.
+                string reader = streamReader.ReadToEnd();
+                // Save the result after validating the program.
+                result = Form1.Instance.IsValidProgram(reader).Result;
+            }
+
+            // Check the result of the validation.
+            Assert.That(result, Is.True);
+        }
+
+
     }
 }

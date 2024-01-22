@@ -1,0 +1,17 @@
+moveto 650,350
+count = 400
+while count > 0
+IF count == 400
+rectangle count,count pen red fill on
+ENDIF
+IF COUNT == 300
+circle count pen green fill on
+ENDIF
+IF COUNT == 200
+triangle count pen black fill on
+ENDIF
+IF COUNT == 100
+circle count pen red fill on
+ENDIF
+count = count - 100
+endloop
