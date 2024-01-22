@@ -134,6 +134,29 @@ namespace aseassignmentTest
         }
 
 
+        /// <summary>
+        /// Test loop command with valid condition.
+        /// </summary>
+        [Test]
+        [TestCase("x = 0\nwhile x < 10\n x = x + 1\nendloop")]
+        [TestCase("x = 10\nwhile x > 10\nendloop")]
+        public void IsValidLoopCommand_ValidLoopCommand_ReturnsTrue(string command)
+        {
+            // Check if the given loop command is valid
+            Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.True);
+        }
+
+        /// <summary>
+        /// Test loop command with invalid condition.
+        /// </summary>
+        [Test]
+        [TestCase("x = 0\nwhile x < 10\n x = x + 1")]
+        [TestCase("x = 10\nwhilea x > 10\nendloop")]
+        public void IsValidLoopCommand_InValidLoopCommand_ReturnsFalse(string command)
+        {
+            // Check if the given loop command is invalid
+            Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.False);
+        }
 
     }
 }
