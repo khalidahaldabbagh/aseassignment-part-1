@@ -158,5 +158,31 @@ namespace aseassignmentTest
             Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.False);
         }
 
+
+        /// <summary>
+        /// Test variables with valid variables.
+        /// </summary>
+        [Test]
+        [TestCase("x = 10\ny = 20\nz = 30")]
+        [TestCase("size = 30\ncircle size")]
+        [TestCase("size = 30\nsize = size * 10\ncircle size")]
+        public void IsValidVariable_ValidVariable_ReturnsTrue(string command)
+        {
+            // Check if the given variable is valid
+            Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.True);
+        }
+
+
+        /// <summary>
+        /// Test variables with invalid variables.
+        /// </summary>
+        [Test]
+        [TestCase("size")]
+        [TestCase("size = 30\ncircle radius")]
+        public void IsValidVariable_ValidVariable_ReturnsFalse(string command)
+        {
+            // Check if the given variable is valid
+            Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.False);
+        }
     }
 }
