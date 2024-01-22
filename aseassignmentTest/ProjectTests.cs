@@ -209,5 +209,19 @@ namespace aseassignmentTest
             // Check if the given if command is invalid
             Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.False);
         }
+
+        /// <summary>
+        /// Test syntax of the program with Invalid syntax.
+        /// </summary>
+        [Test]
+        [TestCase("x = 0\nif x < 10\n x = x + 1", "Line 3, EndIf tag not found.")]
+        [TestCase("x = 0\nwhile x < 10\n x = x + 1", "Line 3, EndLoop tag not found.")]
+        public void IsValidProgram_ValidProgram_ReturnsFalse(string command, string error)
+        {
+            // Check the result of the validation.
+            Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.False);
+            Assert.That(Form1.Instance.errorString, Is.EqualTo(error));
+        }
+
     }
 }
