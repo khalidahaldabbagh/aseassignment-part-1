@@ -1113,7 +1113,13 @@ namespace aseassignment
             lbStatus.Text = "";
         }
 
-       
 
+        private void btnNewProgram_Click(object sender, EventArgs e)
+        {
+            NewProgram newProgram = new NewProgram(new Canvas(pbOutput));
+            newProgram.Show();
+        }
+
+       
     }
 }

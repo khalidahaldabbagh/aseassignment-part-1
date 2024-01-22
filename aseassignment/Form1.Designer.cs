@@ -55,20 +55,18 @@
             // 
             pbOutput.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbOutput.BackColor = Color.DimGray;
-            pbOutput.Location = new Point(869, 85);
-            pbOutput.Margin = new Padding(5, 5, 5, 5);
+            pbOutput.Location = new Point(535, 53);
             pbOutput.Name = "pbOutput";
-            pbOutput.Size = new Size(674, 706);
+            pbOutput.Size = new Size(415, 441);
             pbOutput.TabIndex = 0;
             pbOutput.TabStop = false;
             // 
             // textBox1
             // 
             textBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            textBox1.Location = new Point(70, 818);
-            textBox1.Margin = new Padding(5, 5, 5, 5);
+            textBox1.Location = new Point(43, 511);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(690, 39);
+            textBox1.Size = new Size(426, 27);
             textBox1.TabIndex = 1;
             textBox1.TextChanged += textBox1_TextChanged;
             textBox1.KeyDown += textBox1_KeyDown;
@@ -76,20 +74,18 @@
             // rtbInput
             // 
             rtbInput.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            rtbInput.Location = new Point(70, 141);
-            rtbInput.Margin = new Padding(5, 5, 5, 5);
+            rtbInput.Location = new Point(43, 88);
             rtbInput.Name = "rtbInput";
-            rtbInput.Size = new Size(690, 556);
+            rtbInput.Size = new Size(426, 349);
             rtbInput.TabIndex = 2;
             rtbInput.Text = "";
             rtbInput.TextChanged += rtbInput_TextChanged;
             // 
             // btnRun
             // 
-            btnRun.Location = new Point(650, 85);
-            btnRun.Margin = new Padding(5, 5, 5, 5);
+            btnRun.Location = new Point(400, 53);
             btnRun.Name = "btnRun";
-            btnRun.Size = new Size(114, 46);
+            btnRun.Size = new Size(70, 29);
             btnRun.TabIndex = 3;
             btnRun.Text = "Run";
             btnRun.UseVisualStyleBackColor = true;
@@ -97,10 +93,9 @@
             // 
             // btnSyntax
             // 
-            btnSyntax.Location = new Point(531, 85);
-            btnSyntax.Margin = new Padding(5, 5, 5, 5);
+            btnSyntax.Location = new Point(327, 53);
             btnSyntax.Name = "btnSyntax";
-            btnSyntax.Size = new Size(107, 46);
+            btnSyntax.Size = new Size(66, 29);
             btnSyntax.TabIndex = 4;
             btnSyntax.Text = "check";
             btnSyntax.UseVisualStyleBackColor = true;
@@ -109,10 +104,9 @@
             // btnExit
             // 
             btnExit.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnExit.Location = new Point(1391, 933);
-            btnExit.Margin = new Padding(5, 5, 5, 5);
+            btnExit.Location = new Point(856, 583);
             btnExit.Name = "btnExit";
-            btnExit.Size = new Size(153, 46);
+            btnExit.Size = new Size(94, 29);
             btnExit.TabIndex = 5;
             btnExit.Text = "&Exit";
             btnExit.UseVisualStyleBackColor = true;
@@ -121,29 +115,27 @@
             // tbFilePath
             // 
             tbFilePath.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            tbFilePath.Location = new Point(70, 933);
-            tbFilePath.Margin = new Padding(5, 6, 5, 6);
+            tbFilePath.Location = new Point(43, 583);
+            tbFilePath.Margin = new Padding(3, 4, 3, 4);
             tbFilePath.Name = "tbFilePath";
-            tbFilePath.Size = new Size(994, 39);
+            tbFilePath.Size = new Size(613, 27);
             tbFilePath.TabIndex = 6;
             // 
             // lbProgramSyntex
             // 
             lbProgramSyntex.AutoSize = true;
-            lbProgramSyntex.Location = new Point(70, 104);
-            lbProgramSyntex.Margin = new Padding(5, 0, 5, 0);
+            lbProgramSyntex.Location = new Point(43, 65);
             lbProgramSyntex.Name = "lbProgramSyntex";
-            lbProgramSyntex.Size = new Size(181, 32);
+            lbProgramSyntex.Size = new Size(113, 20);
             lbProgramSyntex.TabIndex = 7;
             lbProgramSyntex.Text = "Program Syntex";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(869, 50);
-            label2.Margin = new Padding(5, 0, 5, 0);
+            label2.Location = new Point(535, 31);
             label2.Name = "label2";
-            label2.Size = new Size(89, 32);
+            label2.Size = new Size(55, 20);
             label2.TabIndex = 8;
             label2.Text = "Canvas";
             // 
@@ -151,20 +143,18 @@
             // 
             label3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label3.AutoSize = true;
-            label3.Location = new Point(70, 781);
-            label3.Margin = new Padding(5, 0, 5, 0);
+            label3.Location = new Point(43, 488);
             label3.Name = "label3";
-            label3.Size = new Size(176, 32);
+            label3.Size = new Size(109, 20);
             label3.TabIndex = 9;
             label3.Text = "Command Line";
             // 
             // btnLoad
             // 
             btnLoad.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnLoad.Location = new Point(1194, 933);
-            btnLoad.Margin = new Padding(5, 5, 5, 5);
+            btnLoad.Location = new Point(735, 583);
             btnLoad.Name = "btnLoad";
-            btnLoad.Size = new Size(88, 46);
+            btnLoad.Size = new Size(54, 29);
             btnLoad.TabIndex = 5;
             btnLoad.Text = "&Load";
             btnLoad.UseVisualStyleBackColor = true;
@@ -173,10 +163,9 @@
             // btnSave
             // 
             btnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnSave.Location = new Point(1292, 933);
-            btnSave.Margin = new Padding(5, 5, 5, 5);
+            btnSave.Location = new Point(795, 583);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(88, 46);
+            btnSave.Size = new Size(54, 29);
             btnSave.TabIndex = 5;
             btnSave.Text = "&Save";
             btnSave.UseVisualStyleBackColor = true;
@@ -186,24 +175,19 @@
             // 
             label1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label1.AutoSize = true;
-            label1.Location = new Point(70, 894);
-            label1.Margin = new Padding(5, 0, 5, 0);
+            label1.Location = new Point(43, 559);
             label1.Name = "label1";
-            label1.Size = new Size(104, 32);
+            label1.Size = new Size(64, 20);
             label1.TabIndex = 10;
             label1.Text = "File Path";
-            // 
-            // openFileDialog
-            // 
-            openFileDialog.FileName = "program.txt";
+            
             // 
             // btnBrowse
             // 
             btnBrowse.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnBrowse.Location = new Point(1079, 933);
-            btnBrowse.Margin = new Padding(5, 5, 5, 5);
+            btnBrowse.Location = new Point(664, 583);
             btnBrowse.Name = "btnBrowse";
-            btnBrowse.Size = new Size(104, 46);
+            btnBrowse.Size = new Size(64, 29);
             btnBrowse.TabIndex = 5;
             btnBrowse.Text = "&Browse";
             btnBrowse.UseVisualStyleBackColor = true;
@@ -212,35 +196,32 @@
             // tColorTransition
             // 
             tColorTransition.Interval = 500;
-            /tColorTransition.Tick += tColorTransition_Tick;
+            tColorTransition.Tick += tColorTransition_Tick;
             // 
             // lbStatus
             // 
             lbStatus.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             lbStatus.AutoSize = true;
-            lbStatus.Location = new Point(70, 706);
-            lbStatus.Margin = new Padding(5, 0, 5, 0);
+            lbStatus.Location = new Point(43, 441);
             lbStatus.Name = "lbStatus";
-            lbStatus.Size = new Size(0, 32);
+            lbStatus.Size = new Size(0, 20);
             lbStatus.TabIndex = 9;
             // 
             // lbFileStatus
             // 
             lbFileStatus.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             lbFileStatus.ForeColor = SystemColors.ControlText;
-            lbFileStatus.Location = new Point(179, 894);
-            lbFileStatus.Margin = new Padding(5, 0, 5, 0);
+            lbFileStatus.Location = new Point(110, 559);
             lbFileStatus.Name = "lbFileStatus";
-            lbFileStatus.Size = new Size(889, 32);
+            lbFileStatus.Size = new Size(547, 20);
             lbFileStatus.TabIndex = 9;
             lbFileStatus.TextAlign = ContentAlignment.MiddleRight;
             // 
             // btnNewProgram
             // 
-            btnNewProgram.Location = new Point(317, 85);
-            btnNewProgram.Margin = new Padding(5, 5, 5, 5);
+            btnNewProgram.Location = new Point(195, 53);
             btnNewProgram.Name = "btnNewProgram";
-            btnNewProgram.Size = new Size(203, 46);
+            btnNewProgram.Size = new Size(125, 29);
             btnNewProgram.TabIndex = 4;
             btnNewProgram.Text = "New Program";
             btnNewProgram.UseVisualStyleBackColor = true;
@@ -248,9 +229,9 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1565, 1003);
+            ClientSize = new Size(963, 627);
             Controls.Add(label1);
             Controls.Add(lbStatus);
             Controls.Add(lbFileStatus);
@@ -268,7 +249,6 @@
             Controls.Add(rtbInput);
             Controls.Add(textBox1);
             Controls.Add(pbOutput);
-            Margin = new Padding(5, 5, 5, 5);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Simple Programming Language";
