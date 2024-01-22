@@ -180,7 +180,7 @@
             label1.Size = new Size(64, 20);
             label1.TabIndex = 10;
             label1.Text = "File Path";
-            
+           
             // 
             // btnBrowse
             // 

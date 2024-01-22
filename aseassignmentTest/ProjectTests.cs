@@ -7,9 +7,7 @@ namespace aseassignmentTest
     /// Defines the <see cref="ProjectTests" />. Tests of the aseassignment user input.
     /// </summary>
     public class ProjectTests
-
     {
-        //  This method is executed before each test.
         [SetUp]
         public void Setup()
         {
@@ -63,7 +61,7 @@ namespace aseassignmentTest
                 // Read the text from the file.
                 string reader = streamReader.ReadToEnd();
                 // Save the result after validating the program.
-                result = Parser.isValidSyntex(reader);
+                result = Form1.Instance.IsValidProgram(reader).Result;
             }
 
             // Check the result of the validation.
@@ -133,7 +131,6 @@ namespace aseassignmentTest
             Assert.That(result, Is.True);
         }
 
-
         /// <summary>
         /// Test loop command with valid condition.
         /// </summary>
@@ -158,7 +155,6 @@ namespace aseassignmentTest
             Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.False);
         }
 
-
         /// <summary>
         /// Test variables with valid variables.
         /// </summary>
@@ -171,7 +167,6 @@ namespace aseassignmentTest
             // Check if the given variable is valid
             Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.True);
         }
-
 
         /// <summary>
         /// Test variables with invalid variables.
@@ -222,6 +217,5 @@ namespace aseassignmentTest
             Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.False);
             Assert.That(Form1.Instance.errorString, Is.EqualTo(error));
         }
-
     }
 }

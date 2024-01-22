@@ -292,7 +292,7 @@ namespace aseassignment
             }
 
             // return false if the condition is not recognized
-            return false;
+            return true;
         }
 
         /// <summary>

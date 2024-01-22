@@ -2,5 +2,5 @@ moveto 180,150
 count = 20
 while count < 100
 circle count
-count = count * 4
+count = count + 20
 endloop
