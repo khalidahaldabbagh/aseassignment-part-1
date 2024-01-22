@@ -184,5 +184,30 @@ namespace aseassignmentTest
             // Check if the given variable is valid
             Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.False);
         }
+
+        /// <summary>
+        /// Test if command with valid condition.
+        /// </summary>
+        [Test]
+        [TestCase("x = 0\nif x < 10\ncircle x\nendif")]
+        [TestCase("x = 10\nif x > 10\nendif")]
+        [TestCase("if 10 == 10\nendif")]
+        public void IsValidIfCommand_ValidIfCommand_ReturnsTrue(string command)
+        {
+            // Check if the given if command is valid
+            Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.True);
+        }
+
+        /// <summary>
+        /// Test if command with invalid condition.
+        /// </summary>
+        [Test]
+        [TestCase("x = 0\nif x < 10\n x = x + 1")]
+        [TestCase("x = 10\nid x > 10\nendif")]
+        public void IsValidIfCommand_InValidIfCommand_ReturnsFalse(string command)
+        {
+            // Check if the given if command is invalid
+            Assert.That(Form1.Instance.IsValidProgram(command).Result, Is.False);
+        }
     }
 }
